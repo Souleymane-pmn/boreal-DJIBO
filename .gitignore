@@ -1,0 +1,7 @@
+data/landing/
+data/warehouse/*.duckdb
+data/warehouse/*.wal
+logs/*.log
+__pycache__/
+.venv/
+.pytest_cache/

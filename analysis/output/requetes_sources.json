@@ -1,0 +1,23 @@
+{
+ "ingestion": "SELECT source, COUNT(DISTINCT fichier) fichiers, SUM(lignes_chargees) lignes, SUM(lignes_rejetees) rejets, STRING_AGG(DISTINCT encodage, '/') encodages, STRING_AGG(DISTINCT separateur, '/') separateurs FROM meta.ingestion_log WHERE mode IN ('INITIAL') GROUP BY 1 ORDER BY 1",
+ "qualite": "SELECT * EXCLUDE (controle_le) FROM mart.exploitation_qualite ORDER BY rule_id",
+ "tests": "SELECT test_id, libelle, ecarts, statut FROM mart.exploitation_tests ORDER BY test_id",
+ "reconciliation": "SELECT (SELECT SUM(CAST(montant AS DECIMAL(18,2))) FROM raw.reglements) brut, (SELECT SUM(CAST(montant AS DECIMAL(18,2))) FROM core.fact_reglement) coeur, (SELECT SUM(CAST(b.montant AS DECIMAL(18,2))) FROM raw.reglements b WHERE (b._source_file,b._row_num) IN (SELECT _source_file,_row_num FROM quarantine.reglements WHERE rule_id='Q23')) doublons, (SELECT SUM(CAST(b.montant AS DECIMAL(18,2))) FROM raw.reglements b WHERE (b._source_file,b._row_num) IN (SELECT _source_file,_row_num FROM quarantine.reglements WHERE rule_id='Q24')) en_cascade",
+ "dedup": "SELECT COUNT(*) n, SUM(taille_groupe>1 AND rang=1) survivants FROM prep.client_mapping",
+ "kpi_2020_2025": "SELECT axe, modalite, exposition, primes_acquises, nb_sinistres_declares, nb_sinistres, nb_sans_suite, nb_rejetes, montant_paye, reserves, charge, charge_ecretee, frequence, cout_moyen, cout_moyen_ecrete, prime_moyenne, ratio_sp, ratio_sp_ecrete, taux_resiliation, resiliations, nb_graves FROM mart.kpi_segment WHERE periode='2020-2025' ORDER BY axe, modalite",
+ "kpi_annuel": "SELECT * FROM mart.kpi_segment WHERE axe='total' AND periode<>'2020-2025' ORDER BY periode",
+ "graves": "SELECT f.sinistre_id, f.garantie, f.annee_survenance, f.charge, f.reserve_initiale, f.nb_paiements, c.region, s.zone_risque, s.canal, s.tranche_age FROM core.fact_sinistre f JOIN core.dim_segment s USING (segment_key) JOIN core.dim_client c USING (client_id) WHERE f.charge > 150000 ORDER BY f.charge DESC",
+ "decomposition": "SELECT * FROM mart.decomposition_sp ORDER BY mesure, annee",
+ "contributions": "SELECT annee, axe, modalite, ratio_sp, contribution_delta_sp, contribution_delta_sp_ecrete FROM mart.contribution_segments WHERE annee >= 2021",
+ "base_bootstrap": "WITH e AS (SELECT contrat_id, SUM(exposition_annees) expo, SUM(prime_acquise) prime, SUM(resiliation) resil FROM core.fact_exposition_mensuelle GROUP BY 1), s AS (SELECT contrat_id, SUM(avec_suite::INT) n, SUM(charge) ch, SUM(charge_ecretee) che FROM core.fact_sinistre GROUP BY 1) SELECT e.*, COALESCE(s.n,0) n, COALESCE(s.ch,0) ch, COALESCE(s.che,0) che, k.produit, k.zone_risque, k.canal FROM e JOIN core.dim_contrat k ON k.contrat_id=e.contrat_id AND k.is_current LEFT JOIN s ON s.contrat_id=e.contrat_id",
+ "base_couts": "SELECT f.charge, f.charge_ecretee, s.canal, s.zone_risque, s.produit, f.garantie FROM core.fact_sinistre f JOIN core.dim_segment s USING (segment_key) WHERE f.avec_suite",
+ "retention": "SELECT * FROM mart.retention_cohorte ORDER BY produit, cohorte, annee_anciennete",
+ "retention_detention": "SELECT * FROM mart.retention_detention ORDER BY 1, 2",
+ "detention": "SELECT COUNT(*) n, AVG((detention_origine='Multi-détenteur')::INT) part_origine, AVG((detention_tout_temps='Auto + habitation')::INT) part_tout_temps FROM mart.client_detention",
+ "valeur_client": "SELECT * FROM mart.valeur_client ORDER BY rang",
+ "delais": "SELECT * FROM mart.delais_sinistres ORDER BY ordre, garantie",
+ "audits": "SELECT * FROM mart.audits_criteres ORDER BY critere, modalite",
+ "timing_audit": "SELECT COUNT(*) n_audites_payes, AVG((date_audit > date_dernier_paiement)::INT) part_audit_apres_dernier_paiement, AVG((date_audit < date_premier_paiement)::INT) part_audit_avant_premier_paiement, MEDIAN(DATE_DIFF('day', date_declaration, date_audit)) delai_median_audit FROM core.fact_sinistre WHERE audite AND nb_paiements > 0",
+ "fraude_paiements": "SELECT COUNT(DISTINCT f.sinistre_id) nb_fraudes, SUM(r.montant) paye_total, SUM(CASE WHEN r.date_paiement > f.date_audit THEN r.montant ELSE 0 END) paye_apres_audit, SUM(CASE WHEN r.date_paiement <= f.date_audit THEN r.montant ELSE 0 END) paye_avant_audit FROM core.fact_sinistre f JOIN core.fact_reglement r USING (sinistre_id) WHERE f.fraude_confirmee = 1",
+ "mensuel": "SELECT mois, SUM(primes_acquises) primes, SUM(charge) charge, SUM(charge_ecretee) charge_e, SUM(contrats_actifs_fin_mois) actifs, SUM(nb_sinistres) n, SUM(exposition) expo FROM mart.portefeuille_mensuel GROUP BY 1 ORDER BY 1"
+}

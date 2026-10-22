@@ -1,0 +1,3987 @@
+{
+ "ingestion": [
+  {
+   "source": "audits",
+   "fichiers": 1,
+   "lignes": 372.0,
+   "rejets": 0.0,
+   "encodages": "utf-8",
+   "separateurs": ","
+  },
+  {
+   "source": "clients",
+   "fichiers": 1,
+   "lignes": 15200.0,
+   "rejets": 0.0,
+   "encodages": "utf-8",
+   "separateurs": ";"
+  },
+  {
+   "source": "contrats",
+   "fichiers": 1,
+   "lignes": 20264.0,
+   "rejets": 0.0,
+   "encodages": "utf-8",
+   "separateurs": ","
+  },
+  {
+   "source": "reglements",
+   "fichiers": 64,
+   "lignes": 3207.0,
+   "rejets": 0.0,
+   "encodages": "utf-8",
+   "separateurs": ","
+  },
+  {
+   "source": "sinistres",
+   "fichiers": 1,
+   "lignes": 2805.0,
+   "rejets": 0.0,
+   "encodages": "utf-8",
+   "separateurs": "jsonl"
+  }
+ ],
+ "qualite": [
+  {
+   "rule_id": "Q01",
+   "entite": "clients",
+   "dimension": "COMPLETUDE",
+   "libelle": "Date de naissance manquante",
+   "gravite": "MINEUR",
+   "traitement": "SIGNALER",
+   "volume": 226,
+   "volume_total": 15200,
+   "taux": 0.01486842105263158,
+   "statut": "ANOMALIES"
+  },
+  {
+   "rule_id": "Q02",
+   "entite": "clients",
+   "dimension": "VALIDITE",
+   "libelle": "Date de naissance sentinelle 01/01/1890",
+   "gravite": "MAJEUR",
+   "traitement": "CORRIGER",
+   "volume": 18,
+   "volume_total": 15200,
+   "taux": 0.0011842105263157896,
+   "statut": "ANOMALIES"
+  },
+  {
+   "rule_id": "Q03",
+   "entite": "clients",
+   "dimension": "VALIDITE",
+   "libelle": "Âge invraisemblable au 1er contrat (<18 ou >100 ans)",
+   "gravite": "MAJEUR",
+   "traitement": "CORRIGER",
+   "volume": 722,
+   "volume_total": 15200,
+   "taux": 0.0475,
+   "statut": "ANOMALIES"
+  },
+  {
+   "rule_id": "Q04",
+   "entite": "clients",
+   "dimension": "UNICITE",
+   "libelle": "Identifiant client dupliqué",
+   "gravite": "BLOQUANT",
+   "traitement": "EXCLURE",
+   "volume": 0,
+   "volume_total": 15200,
+   "taux": 0.0,
+   "statut": "OK"
+  },
+  {
+   "rule_id": "Q05",
+   "entite": "clients",
+   "dimension": "UNICITE",
+   "libelle": "Doublon métier (même e-mail + date de naissance)",
+   "gravite": "MAJEUR",
+   "traitement": "FUSIONNER",
+   "volume": 200,
+   "volume_total": 15200,
+   "taux": 0.013157894736842105,
+   "statut": "ANOMALIES"
+  },
+  {
+   "rule_id": "Q06",
+   "entite": "clients",
+   "dimension": "VALIDITE",
+   "libelle": "Région ou CSP hors référentiel",
+   "gravite": "MINEUR",
+   "traitement": "SIGNALER",
+   "volume": 0,
+   "volume_total": 15200,
+   "taux": 0.0,
+   "statut": "OK"
+  },
+  {
+   "rule_id": "Q07",
+   "entite": "contrats",
+   "dimension": "UNICITE",
+   "libelle": "Identifiant contrat dupliqué ou vide",
+   "gravite": "BLOQUANT",
+   "traitement": "EXCLURE",
+   "volume": 0,
+   "volume_total": 20264,
+   "taux": 0.0,
+   "statut": "OK"
+  },
+  {
+   "rule_id": "Q08",
+   "entite": "contrats",
+   "dimension": "COHERENCE_TABLES",
+   "libelle": "Contrat rattaché à un client inexistant",
+   "gravite": "MAJEUR",
+   "traitement": "EXCLURE",
+   "volume": 0,
+   "volume_total": 20264,
+   "taux": 0.0,
+   "statut": "OK"
+  },
+  {
+   "rule_id": "Q09",
+   "entite": "contrats",
+   "dimension": "COHERENCE_TEMPORELLE",
+   "libelle": "Date de résiliation antérieure à la date d'effet",
+   "gravite": "MAJEUR",
+   "traitement": "EXCLURE",
+   "volume": 20,
+   "volume_total": 20264,
+   "taux": 0.0009869719699960521,
+   "statut": "ANOMALIES"
+  },
+  {
+   "rule_id": "Q10",
+   "entite": "contrats",
+   "dimension": "COHERENCE_TEMPORELLE",
+   "libelle": "Résiliation le jour de l'effet (durée nulle)",
+   "gravite": "MINEUR",
+   "traitement": "SIGNALER",
+   "volume": 6,
+   "volume_total": 20264,
+   "taux": 0.00029609159099881565,
+   "statut": "ANOMALIES"
+  },
+  {
+   "rule_id": "Q11",
+   "entite": "contrats",
+   "dimension": "VALIDITE",
+   "libelle": "Prime annuelle nulle ou négative",
+   "gravite": "MAJEUR",
+   "traitement": "EXCLURE",
+   "volume": 25,
+   "volume_total": 20264,
+   "taux": 0.001233714962495065,
+   "statut": "ANOMALIES"
+  },
+  {
+   "rule_id": "Q12",
+   "entite": "contrats",
+   "dimension": "VALIDITE",
+   "libelle": "Valeur hors domaine (produit, formule, canal, zone, franchise)",
+   "gravite": "MAJEUR",
+   "traitement": "EXCLURE",
+   "volume": 0,
+   "volume_total": 20264,
+   "taux": 0.0,
+   "statut": "OK"
+  },
+  {
+   "rule_id": "Q13",
+   "entite": "contrats",
+   "dimension": "COHERENCE",
+   "libelle": "Attributs incohérents avec le produit",
+   "gravite": "MINEUR",
+   "traitement": "SIGNALER",
+   "volume": 0,
+   "volume_total": 20264,
+   "taux": 0.0,
+   "statut": "OK"
+  },
+  {
+   "rule_id": "Q14",
+   "entite": "contrats",
+   "dimension": "COMPLETUDE",
+   "libelle": "Date d'effet manquante ou illisible",
+   "gravite": "MAJEUR",
+   "traitement": "EXCLURE",
+   "volume": 0,
+   "volume_total": 20264,
+   "taux": 0.0,
+   "statut": "OK"
+  },
+  {
+   "rule_id": "Q15",
+   "entite": "contrats",
+   "dimension": "COHERENCE_TEMPORELLE",
+   "libelle": "Dates postérieures à l'extraction",
+   "gravite": "MAJEUR",
+   "traitement": "EXCLURE",
+   "volume": 0,
+   "volume_total": 20264,
+   "taux": 0.0,
+   "statut": "OK"
+  },
+  {
+   "rule_id": "Q16",
+   "entite": "sinistres",
+   "dimension": "UNICITE",
+   "libelle": "Identifiant sinistre dupliqué ou vide",
+   "gravite": "BLOQUANT",
+   "traitement": "EXCLURE",
+   "volume": 0,
+   "volume_total": 2805,
+   "taux": 0.0,
+   "statut": "OK"
+  },
+  {
+   "rule_id": "Q17",
+   "entite": "sinistres",
+   "dimension": "COHERENCE_TABLES",
+   "libelle": "Sinistre sur contrat inexistant ou en quarantaine",
+   "gravite": "MAJEUR",
+   "traitement": "EXCLURE",
+   "volume": 5,
+   "volume_total": 2805,
+   "taux": 0.0017825311942959,
+   "statut": "ANOMALIES"
+  },
+  {
+   "rule_id": "Q18",
+   "entite": "sinistres",
+   "dimension": "COHERENCE_TEMPORELLE",
+   "libelle": "Déclaration antérieure à la survenance",
+   "gravite": "MINEUR",
+   "traitement": "SIGNALER",
+   "volume": 15,
+   "volume_total": 2805,
+   "taux": 0.0053475935828877,
+   "statut": "ANOMALIES"
+  },
+  {
+   "rule_id": "Q19",
+   "entite": "sinistres",
+   "dimension": "COHERENCE_TEMPORELLE",
+   "libelle": "Survenance hors période de couverture du contrat",
+   "gravite": "MAJEUR",
+   "traitement": "SIGNALER",
+   "volume": 18,
+   "volume_total": 2805,
+   "taux": 0.006417112299465241,
+   "statut": "ANOMALIES"
+  },
+  {
+   "rule_id": "Q20",
+   "entite": "sinistres",
+   "dimension": "COHERENCE_TABLES",
+   "libelle": "Garantie incompatible avec le produit",
+   "gravite": "MAJEUR",
+   "traitement": "EXCLURE",
+   "volume": 0,
+   "volume_total": 2805,
+   "taux": 0.0,
+   "statut": "OK"
+  },
+  {
+   "rule_id": "Q21",
+   "entite": "sinistres",
+   "dimension": "COHERENCE",
+   "libelle": "Statut incohérent avec la réserve",
+   "gravite": "MINEUR",
+   "traitement": "SIGNALER",
+   "volume": 0,
+   "volume_total": 2805,
+   "taux": 0.0,
+   "statut": "OK"
+  },
+  {
+   "rule_id": "Q22",
+   "entite": "sinistres",
+   "dimension": "VALIDITE",
+   "libelle": "Réserve atypique (> 500 k€) : sinistre grave à isoler",
+   "gravite": "MINEUR",
+   "traitement": "SIGNALER",
+   "volume": 1,
+   "volume_total": 2805,
+   "taux": 0.00035650623885918,
+   "statut": "ANOMALIES"
+  },
+  {
+   "rule_id": "Q23",
+   "entite": "reglements",
+   "dimension": "UNICITE",
+   "libelle": "Paiement livré plusieurs fois (re-livraison)",
+   "gravite": "MAJEUR",
+   "traitement": "EXCLURE",
+   "volume": 32,
+   "volume_total": 3207,
+   "taux": 0.009978172747115684,
+   "statut": "ANOMALIES"
+  },
+  {
+   "rule_id": "Q24",
+   "entite": "reglements",
+   "dimension": "COHERENCE_TABLES",
+   "libelle": "Paiement sur sinistre inexistant ou en quarantaine",
+   "gravite": "MAJEUR",
+   "traitement": "EXCLURE",
+   "volume": 1,
+   "volume_total": 3207,
+   "taux": 0.0003118178983473651,
+   "statut": "ANOMALIES"
+  },
+  {
+   "rule_id": "Q25",
+   "entite": "reglements",
+   "dimension": "VALIDITE",
+   "libelle": "Montant nul, négatif ou illisible",
+   "gravite": "MAJEUR",
+   "traitement": "EXCLURE",
+   "volume": 0,
+   "volume_total": 3207,
+   "taux": 0.0,
+   "statut": "OK"
+  },
+  {
+   "rule_id": "Q26",
+   "entite": "reglements",
+   "dimension": "COHERENCE_TEMPORELLE",
+   "libelle": "Paiement avant déclaration ou après extraction",
+   "gravite": "MAJEUR",
+   "traitement": "EXCLURE",
+   "volume": 0,
+   "volume_total": 3207,
+   "taux": 0.0,
+   "statut": "OK"
+  },
+  {
+   "rule_id": "Q27",
+   "entite": "reglements",
+   "dimension": "COHERENCE",
+   "libelle": "Paiement sur sinistre rejeté ou sans suite",
+   "gravite": "MAJEUR",
+   "traitement": "SIGNALER",
+   "volume": 0,
+   "volume_total": 3207,
+   "taux": 0.0,
+   "statut": "OK"
+  },
+  {
+   "rule_id": "Q28",
+   "entite": "reglements",
+   "dimension": "VALIDITE",
+   "libelle": "Fichier au schéma non standard (colonnes renommées/permutées)",
+   "gravite": "MINEUR",
+   "traitement": "SIGNALER",
+   "volume": 86,
+   "volume_total": 3207,
+   "taux": 0.0268163392578734,
+   "statut": "ANOMALIES"
+  },
+  {
+   "rule_id": "Q29",
+   "entite": "reglements",
+   "dimension": "COHERENCE_TEMPORELLE",
+   "libelle": "Paiement hors du mois de son fichier de livraison",
+   "gravite": "MINEUR",
+   "traitement": "SIGNALER",
+   "volume": 32,
+   "volume_total": 3207,
+   "taux": 0.009978172747115684,
+   "statut": "ANOMALIES"
+  },
+  {
+   "rule_id": "Q30",
+   "entite": "sinistres",
+   "dimension": "COHERENCE",
+   "libelle": "Cumul payé > 2 fois la réserve initiale du sinistre",
+   "gravite": "MINEUR",
+   "traitement": "SIGNALER",
+   "volume": 17,
+   "volume_total": 2805,
+   "taux": 0.006060606060606061,
+   "statut": "ANOMALIES"
+  },
+  {
+   "rule_id": "Q31",
+   "entite": "audits",
+   "dimension": "COHERENCE_TABLES",
+   "libelle": "Audit sur sinistre inexistant ou en quarantaine",
+   "gravite": "MAJEUR",
+   "traitement": "EXCLURE",
+   "volume": 0,
+   "volume_total": 372,
+   "taux": 0.0,
+   "statut": "OK"
+  },
+  {
+   "rule_id": "Q32",
+   "entite": "audits",
+   "dimension": "UNICITE",
+   "libelle": "Plusieurs audits pour un même sinistre",
+   "gravite": "MAJEUR",
+   "traitement": "EXCLURE",
+   "volume": 0,
+   "volume_total": 372,
+   "taux": 0.0,
+   "statut": "OK"
+  },
+  {
+   "rule_id": "Q33",
+   "entite": "audits",
+   "dimension": "COHERENCE_TEMPORELLE",
+   "libelle": "Audit antérieur à la déclaration ou postérieur à l'extraction",
+   "gravite": "MINEUR",
+   "traitement": "SIGNALER",
+   "volume": 0,
+   "volume_total": 372,
+   "taux": 0.0,
+   "statut": "OK"
+  },
+  {
+   "rule_id": "Q34",
+   "entite": "audits",
+   "dimension": "VALIDITE",
+   "libelle": "Indicateur de fraude hors {0,1}",
+   "gravite": "MAJEUR",
+   "traitement": "EXCLURE",
+   "volume": 0,
+   "volume_total": 372,
+   "taux": 0.0,
+   "statut": "OK"
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "T01",
+   "libelle": "Unicité de la clé de substitution et d'une version courante par contrat",
+   "ecarts": 0,
+   "statut": "OK"
+  },
+  {
+   "test_id": "T02",
+   "libelle": "Unicité des clés client, sinistre et paiement",
+   "ecarts": 0,
+   "statut": "OK"
+  },
+  {
+   "test_id": "T03",
+   "libelle": "Unicité du grain des faits d'exposition (contrat × mois, contrat × année)",
+   "ecarts": 0,
+   "statut": "OK"
+  },
+  {
+   "test_id": "T04",
+   "libelle": "Intégrité référentielle des faits vers les dimensions",
+   "ecarts": 0,
+   "statut": "OK"
+  },
+  {
+   "test_id": "T05",
+   "libelle": "Réconciliation règlements : brut = cœur + quarantaine (lignes et montants au centime)",
+   "ecarts": 0,
+   "statut": "OK"
+  },
+  {
+   "test_id": "T06",
+   "libelle": "Réconciliation contrats, sinistres, clients et audits : brut = cœur + quarantaine",
+   "ecarts": 0,
+   "statut": "OK"
+  },
+  {
+   "test_id": "T07",
+   "libelle": "Exposition strictement positive et au plus égale à la durée du mois",
+   "ecarts": 0,
+   "statut": "OK"
+  },
+  {
+   "test_id": "T08",
+   "libelle": "Aucune date d'événement postérieure à l'extraction",
+   "ecarts": 0,
+   "statut": "OK"
+  },
+  {
+   "test_id": "T09",
+   "libelle": "Cohérence cœur ↔ marts (primes, exposition, charge, au centime)",
+   "ecarts": 0,
+   "statut": "OK"
+  },
+  {
+   "test_id": "T10",
+   "libelle": "Montant payé des sinistres = somme des règlements",
+   "ecarts": 0,
+   "statut": "OK"
+  },
+  {
+   "test_id": "T11",
+   "libelle": "Toute ligne en quarantaine a un motif et une référence source",
+   "ecarts": 0,
+   "statut": "OK"
+  },
+  {
+   "test_id": "T12",
+   "libelle": "Ratio S/P du mart = ratio recalculé depuis le cœur (écart < 0,01 point)",
+   "ecarts": 0,
+   "statut": "OK"
+  },
+  {
+   "test_id": "T13",
+   "libelle": "Une version de dim_contrat par contrat sans chevauchement de validité",
+   "ecarts": 0,
+   "statut": "OK"
+  }
+ ],
+ "volumes": {
+  "raw.clients": 15200,
+  "raw.contrats": 20264,
+  "raw.sinistres": 2805,
+  "raw.reglements": 3207,
+  "raw.audits": 372,
+  "core.dim_client": 15000,
+  "core.dim_contrat": 20219,
+  "core.fact_sinistre": 2800,
+  "core.fact_reglement": 3174,
+  "core.fact_exposition_mensuelle": 555226,
+  "core.fact_exposition_annuelle": 65081,
+  "core.dim_segment": 630,
+  "quarantine.clients": 200,
+  "quarantine.contrats": 45,
+  "quarantine.sinistres": 5,
+  "quarantine.reglements": 33
+ },
+ "reconciliation": {
+  "brut": 11294835.8,
+  "coeur": 11221001.06,
+  "doublons": 73150.42,
+  "en_cascade": 684.32
+ },
+ "dedup": {
+  "clients_source": 15200,
+  "doublons": 200,
+  "taux": 0.013157894736842105,
+  "contrats_rattaches": 0,
+  "groupes_avec_contrats_des_deux_cotes": 0
+ },
+ "kpi": {
+  "canal|AGENT": {
+   "exposition": 18853.10882958158,
+   "primes_acquises": 8371324.097385617,
+   "nb_sinistres_declares": 1154.0,
+   "nb_sinistres": 816.0,
+   "nb_sans_suite": 156.0,
+   "nb_rejetes": 182.0,
+   "montant_paye": 6504543.620000005,
+   "reserves": 252914.37000000002,
+   "charge": 6757457.990000007,
+   "charge_ecretee": 4354316.200000002,
+   "frequence": 0.04328198640213918,
+   "cout_moyen": 8281.19851715687,
+   "cout_moyen_ecrete": 5336.171813725493,
+   "prime_moyenne": 444.02884283203963,
+   "ratio_sp": 0.8072149532605453,
+   "ratio_sp_ecrete": 0.5201466517536771,
+   "taux_resiliation": 0.11616121350574118,
+   "resiliations": 2190.0,
+   "nb_graves": 3.0
+  },
+  "canal|COURTIER": {
+   "exposition": 9317.097878168817,
+   "primes_acquises": 4118406.015003381,
+   "nb_sinistres_declares": 569.0,
+   "nb_sinistres": 400.0,
+   "nb_sans_suite": 72.0,
+   "nb_rejetes": 97.0,
+   "montant_paye": 1606163.629999999,
+   "reserves": 74072.17000000001,
+   "charge": 1680235.7999999989,
+   "charge_ecretee": 1680235.7999999989,
+   "frequence": 0.04293182332421907,
+   "cout_moyen": 4200.589499999997,
+   "cout_moyen_ecrete": 4200.589499999997,
+   "prime_moyenne": 442.0266985338156,
+   "ratio_sp": 0.4079820673044106,
+   "ratio_sp_ecrete": 0.4079820673044106,
+   "taux_resiliation": 0.12096041221598722,
+   "resiliations": 1127.0,
+   "nb_graves": 0.0
+  },
+  "canal|WEB": {
+   "exposition": 16995.934291589892,
+   "primes_acquises": 7490207.882217781,
+   "nb_sinistres_declares": 1077.0,
+   "nb_sinistres": 741.0,
+   "nb_sans_suite": 137.0,
+   "nb_rejetes": 199.0,
+   "montant_paye": 3110293.809999998,
+   "reserves": 204708.94999999998,
+   "charge": 3315002.76,
+   "charge_ecretee": 3315002.76,
+   "frequence": 0.043598662320474456,
+   "cout_moyen": 4473.6879352226715,
+   "cout_moyen_ecrete": 4473.6879352226715,
+   "prime_moyenne": 440.7058625735076,
+   "ratio_sp": 0.44257820505489875,
+   "ratio_sp_ecrete": 0.44257820505489875,
+   "taux_resiliation": 0.17898398215773725,
+   "resiliations": 3042.0,
+   "nb_graves": 0.0
+  },
+  "formule|CONFORT": {
+   "exposition": 18028.73921972324,
+   "primes_acquises": 7971864.447720732,
+   "nb_sinistres_declares": 1131.0,
+   "nb_sinistres": 953.0,
+   "nb_sans_suite": 178.0,
+   "nb_rejetes": 0.0,
+   "montant_paye": 6182575.220000003,
+   "reserves": 324835.2099999999,
+   "charge": 6507410.4300000025,
+   "charge_ecretee": 4154559.2299999977,
+   "frequence": 0.05286004686103777,
+   "cout_moyen": 6828.342528856246,
+   "cout_moyen_ecrete": 4359.453546694646,
+   "prime_moyenne": 442.1753706992223,
+   "ratio_sp": 0.8162971752311422,
+   "ratio_sp_ecrete": 0.5211527688717593,
+   "taux_resiliation": 0.13212238365476597,
+   "resiliations": 2382.0,
+   "nb_graves": 2.0
+  },
+  "formule|ESSENTIELLE": {
+   "exposition": 15210.06433949988,
+   "primes_acquises": 5647622.429404517,
+   "nb_sinistres_declares": 924.0,
+   "nb_sinistres": 405.0,
+   "nb_sans_suite": 41.0,
+   "nb_rejetes": 478.0,
+   "montant_paye": 2457617.0799999987,
+   "reserves": 66932.63,
+   "charge": 2524549.709999998,
+   "charge_ecretee": 2474259.1199999982,
+   "frequence": 0.026627106300151044,
+   "cout_moyen": 6233.456074074069,
+   "cout_moyen_ecrete": 6109.281777777774,
+   "prime_moyenne": 371.3082537552379,
+   "ratio_sp": 0.44701106378072547,
+   "ratio_sp_ecrete": 0.4381063272073029,
+   "taux_resiliation": 0.16443059964611792,
+   "resiliations": 2501.0,
+   "nb_graves": 1.0
+  },
+  "formule|PREMIUM": {
+   "exposition": 11927.337440114206,
+   "primes_acquises": 6360451.117481193,
+   "nb_sinistres_declares": 745.0,
+   "nb_sinistres": 599.0,
+   "nb_sans_suite": 146.0,
+   "nb_rejetes": 0.0,
+   "montant_paye": 2580808.7600000002,
+   "reserves": 139927.65,
+   "charge": 2720736.4099999997,
+   "charge_ecretee": 2720736.4099999997,
+   "frequence": 0.050220764106617286,
+   "cout_moyen": 4542.130901502504,
+   "cout_moyen_ecrete": 4542.130901502504,
+   "prime_moyenne": 533.2666363650973,
+   "ratio_sp": 0.4277584026268628,
+   "ratio_sp_ecrete": 0.4277584026268628,
+   "taux_resiliation": 0.1237493285832506,
+   "resiliations": 1476.0,
+   "nb_graves": 0.0
+  },
+  "produit|AUTO": {
+   "exposition": 23213.111567447046,
+   "primes_acquises": 13681257.09974012,
+   "nb_sinistres_declares": 1639.0,
+   "nb_sinistres": 1026.0,
+   "nb_sans_suite": 215.0,
+   "nb_rejetes": 398.0,
+   "montant_paye": 7377811.32,
+   "reserves": 332342.07999999996,
+   "charge": 7710153.400000001,
+   "charge_ecretee": 5307011.610000001,
+   "frequence": 0.044199158609947546,
+   "cout_moyen": 7514.7693957115025,
+   "cout_moyen_ecrete": 5172.5259356725155,
+   "prime_moyenne": 589.3762695271779,
+   "ratio_sp": 0.5635559176902288,
+   "ratio_sp_ecrete": 0.38790379943234965,
+   "taux_resiliation": 0.14185948275103047,
+   "resiliations": 3293.0,
+   "nb_graves": 3.0
+  },
+  "produit|HABITATION": {
+   "exposition": 21953.02943192058,
+   "primes_acquises": 6298680.894866539,
+   "nb_sinistres_declares": 1161.0,
+   "nb_sinistres": 931.0,
+   "nb_sans_suite": 150.0,
+   "nb_rejetes": 80.0,
+   "montant_paye": 3843189.739999995,
+   "reserves": 199353.41,
+   "charge": 4042543.149999996,
+   "charge_ecretee": 4042543.149999996,
+   "frequence": 0.04240872554228388,
+   "cout_moyen": 4342.15161117078,
+   "cout_moyen_ecrete": 4342.15161117078,
+   "prime_moyenne": 286.9162506432031,
+   "ratio_sp": 0.6418078987450677,
+   "ratio_sp_ecrete": 0.6418078987450677,
+   "taux_resiliation": 0.13966181795128074,
+   "resiliations": 3066.0,
+   "nb_graves": 0.0
+  },
+  "region|ARA": {
+   "exposition": 5543.723477070463,
+   "primes_acquises": 2386865.5364544955,
+   "nb_sinistres_declares": 343.0,
+   "nb_sinistres": 244.0,
+   "nb_sans_suite": 42.0,
+   "nb_rejetes": 57.0,
+   "montant_paye": 1106765.0500000005,
+   "reserves": 47550.65,
+   "charge": 1154315.7000000002,
+   "charge_ecretee": 1154315.7000000002,
+   "frequence": 0.04401373932325713,
+   "cout_moyen": 4730.802049180329,
+   "cout_moyen_ecrete": 4730.802049180329,
+   "prime_moyenne": 430.5527767261249,
+   "ratio_sp": 0.48361153251835337,
+   "ratio_sp_ecrete": 0.48361153251835337,
+   "taux_resiliation": 0.1457504154639007,
+   "resiliations": 808.0,
+   "nb_graves": 0.0
+  },
+  "region|BFC": {
+   "exposition": 2749.6591375766257,
+   "primes_acquises": 1218465.4471184036,
+   "nb_sinistres_declares": 182.0,
+   "nb_sinistres": 131.0,
+   "nb_sans_suite": 27.0,
+   "nb_rejetes": 24.0,
+   "montant_paye": 538713.9400000001,
+   "reserves": 38336.82,
+   "charge": 577050.7599999999,
+   "charge_ecretee": 577050.7599999999,
+   "frequence": 0.04764226889426558,
+   "cout_moyen": 4404.967633587786,
+   "cout_moyen_ecrete": 4404.967633587786,
+   "prime_moyenne": 443.13327076325595,
+   "ratio_sp": 0.47358811968340153,
+   "ratio_sp_ecrete": 0.47358811968340153,
+   "taux_resiliation": 0.13674422216980045,
+   "resiliations": 376.0,
+   "nb_graves": 0.0
+  },
+  "region|BRE": {
+   "exposition": 2203.2142368237933,
+   "primes_acquises": 968015.4891718099,
+   "nb_sinistres_declares": 130.0,
+   "nb_sinistres": 101.0,
+   "nb_sans_suite": 13.0,
+   "nb_rejetes": 16.0,
+   "montant_paye": 668378.7299999999,
+   "reserves": 18217.82,
+   "charge": 686596.5499999999,
+   "charge_ecretee": 659720.0199999999,
+   "frequence": 0.045842114812041174,
+   "cout_moyen": 6797.985643564356,
+   "cout_moyen_ecrete": 6531.8813861386125,
+   "prime_moyenne": 439.36512073711197,
+   "ratio_sp": 0.7092826072312343,
+   "ratio_sp_ecrete": 0.6815180411673231,
+   "taux_resiliation": 0.139795756060482,
+   "resiliations": 308.0,
+   "nb_graves": 1.0
+  },
+  "region|CVL": {
+   "exposition": 1785.815195071662,
+   "primes_acquises": 797802.8131416852,
+   "nb_sinistres_declares": 102.0,
+   "nb_sinistres": 77.0,
+   "nb_sans_suite": 12.0,
+   "nb_rejetes": 13.0,
+   "montant_paye": 378009.6599999999,
+   "reserves": 23941.559999999998,
+   "charge": 401951.21999999986,
+   "charge_ecretee": 401951.21999999986,
+   "frequence": 0.043117563459252634,
+   "cout_moyen": 5220.1457142857125,
+   "cout_moyen_ecrete": 5220.1457142857125,
+   "prime_moyenne": 446.74433017671277,
+   "ratio_sp": 0.5038227659503322,
+   "ratio_sp_ecrete": 0.5038227659503322,
+   "taux_resiliation": 0.16519066520103282,
+   "resiliations": 295.0,
+   "nb_graves": 0.0
+  },
+  "region|GES": {
+   "exposition": 3542.1656399721865,
+   "primes_acquises": 1532110.27457908,
+   "nb_sinistres_declares": 232.0,
+   "nb_sinistres": 165.0,
+   "nb_sans_suite": 31.0,
+   "nb_rejetes": 36.0,
+   "montant_paye": 724983.7300000002,
+   "reserves": 51586.72000000001,
+   "charge": 776570.4500000001,
+   "charge_ecretee": 776570.4500000001,
+   "frequence": 0.046581672561561975,
+   "cout_moyen": 4706.487575757576,
+   "cout_moyen_ecrete": 4706.487575757576,
+   "prime_moyenne": 432.534903870591,
+   "ratio_sp": 0.5068632871177298,
+   "ratio_sp_ecrete": 0.5068632871177298,
+   "taux_resiliation": 0.14143889668692453,
+   "resiliations": 501.0,
+   "nb_graves": 0.0
+  },
+  "region|HDF": {
+   "exposition": 4118.855578370481,
+   "primes_acquises": 1803974.866666668,
+   "nb_sinistres_declares": 252.0,
+   "nb_sinistres": 164.0,
+   "nb_sans_suite": 34.0,
+   "nb_rejetes": 54.0,
+   "montant_paye": 841746.58,
+   "reserves": 31668.1,
+   "charge": 873414.6799999997,
+   "charge_ecretee": 873414.6799999997,
+   "frequence": 0.03981688526813614,
+   "cout_moyen": 5325.699268292681,
+   "cout_moyen_ecrete": 5325.699268292681,
+   "prime_moyenne": 437.97963593090196,
+   "ratio_sp": 0.4841612242713058,
+   "ratio_sp_ecrete": 0.4841612242713058,
+   "taux_resiliation": 0.1393590984384765,
+   "resiliations": 574.0,
+   "nb_graves": 0.0
+  },
+  "region|IDF": {
+   "exposition": 8870.29158110931,
+   "primes_acquises": 3983306.463572832,
+   "nb_sinistres_declares": 555.0,
+   "nb_sinistres": 382.0,
+   "nb_sans_suite": 71.0,
+   "nb_rejetes": 102.0,
+   "montant_paye": 4399071.599999999,
+   "reserves": 156707.41,
+   "charge": 4555779.010000001,
+   "charge_ecretee": 2179513.75,
+   "frequence": 0.04306510067983892,
+   "cout_moyen": 11926.123062827228,
+   "cout_moyen_ecrete": 5705.533376963351,
+   "prime_moyenne": 449.0615023361705,
+   "ratio_sp": 1.1437179267180182,
+   "ratio_sp_ecrete": 0.5471619545047715,
+   "taux_resiliation": 0.13753775609791488,
+   "resiliations": 1220.0,
+   "nb_graves": 2.0
+  },
+  "region|NAQ": {
+   "exposition": 3839.4277891849633,
+   "primes_acquises": 1715809.4376454535,
+   "nb_sinistres_declares": 262.0,
+   "nb_sinistres": 197.0,
+   "nb_sans_suite": 33.0,
+   "nb_rejetes": 32.0,
+   "montant_paye": 816183.8699999999,
+   "reserves": 59262.689999999995,
+   "charge": 875446.5599999994,
+   "charge_ecretee": 875446.5599999994,
+   "frequence": 0.05130972916196434,
+   "cout_moyen": 4443.891167512687,
+   "cout_moyen_ecrete": 4443.891167512687,
+   "prime_moyenne": 446.8919672037085,
+   "ratio_sp": 0.5102236535085998,
+   "ratio_sp_ecrete": 0.5102236535085998,
+   "taux_resiliation": 0.14299005741075344,
+   "resiliations": 549.0,
+   "nb_graves": 0.0
+  },
+  "region|NOR": {
+   "exposition": 2214.4093086923967,
+   "primes_acquises": 986413.779548249,
+   "nb_sinistres_declares": 125.0,
+   "nb_sinistres": 80.0,
+   "nb_sans_suite": 14.0,
+   "nb_rejetes": 31.0,
+   "montant_paye": 241791.0300000001,
+   "reserves": 29709.82,
+   "charge": 271500.85000000003,
+   "charge_ecretee": 271500.85000000003,
+   "frequence": 0.03612701576260976,
+   "cout_moyen": 3393.7606250000003,
+   "cout_moyen_ecrete": 3393.7606250000003,
+   "prime_moyenne": 445.45232702743823,
+   "ratio_sp": 0.2752403257427528,
+   "ratio_sp_ecrete": 0.2752403257427528,
+   "taux_resiliation": 0.13999218608011282,
+   "resiliations": 310.0,
+   "nb_graves": 0.0
+  },
+  "region|OCC": {
+   "exposition": 4065.823408623733,
+   "primes_acquises": 1818531.8380013492,
+   "nb_sinistres_declares": 258.0,
+   "nb_sinistres": 166.0,
+   "nb_sans_suite": 39.0,
+   "nb_rejetes": 53.0,
+   "montant_paye": 519917.6300000001,
+   "reserves": 34660.649999999994,
+   "charge": 554578.2800000001,
+   "charge_ecretee": 554578.2800000001,
+   "frequence": 0.04082813819407627,
+   "cout_moyen": 3340.8330120481937,
+   "cout_moyen_ecrete": 3340.8330120481937,
+   "prime_moyenne": 447.2727059773892,
+   "ratio_sp": 0.3049593460016116,
+   "ratio_sp_ecrete": 0.3049593460016116,
+   "taux_resiliation": 0.14166872048065018,
+   "resiliations": 576.0,
+   "nb_graves": 0.0
+  },
+  "region|PACA": {
+   "exposition": 3665.631759068652,
+   "primes_acquises": 1616721.7963860214,
+   "nb_sinistres_declares": 229.0,
+   "nb_sinistres": 169.0,
+   "nb_sans_suite": 26.0,
+   "nb_rejetes": 34.0,
+   "montant_paye": 665116.0900000002,
+   "reserves": 35670.32,
+   "charge": 700786.4100000001,
+   "charge_ecretee": 700786.4100000001,
+   "frequence": 0.04610392180881224,
+   "cout_moyen": 4146.665147928995,
+   "cout_moyen_ecrete": 4146.665147928995,
+   "prime_moyenne": 441.0486111667668,
+   "ratio_sp": 0.43346134849330303,
+   "ratio_sp_ecrete": 0.43346134849330303,
+   "taux_resiliation": 0.13503811417373998,
+   "resiliations": 495.0,
+   "nb_graves": 0.0
+  },
+  "region|PDL": {
+   "exposition": 2567.123887747742,
+   "primes_acquises": 1151920.2523203404,
+   "nb_sinistres_declares": 130.0,
+   "nb_sinistres": 81.0,
+   "nb_sans_suite": 23.0,
+   "nb_rejetes": 26.0,
+   "montant_paye": 320323.15,
+   "reserves": 4382.93,
+   "charge": 324706.08,
+   "charge_ecretee": 324706.08,
+   "frequence": 0.0315528207994142,
+   "cout_moyen": 4008.7170370370372,
+   "cout_moyen_ecrete": 4008.7170370370372,
+   "prime_moyenne": 448.72016415653934,
+   "ratio_sp": 0.28188243009525776,
+   "ratio_sp_ecrete": 0.28188243009525776,
+   "taux_resiliation": 0.13517072614070033,
+   "resiliations": 347.0,
+   "nb_graves": 0.0
+  },
+  "total|Ensemble": {
+   "exposition": 45166.140999319694,
+   "primes_acquises": 19979937.994606085,
+   "nb_sinistres_declares": 2800.0,
+   "nb_sinistres": 1957.0,
+   "nb_sans_suite": 365.0,
+   "nb_rejetes": 478.0,
+   "montant_paye": 11221001.059999974,
+   "reserves": 531695.49,
+   "charge": 11752696.54999999,
+   "charge_ecretee": 9349554.759999992,
+   "frequence": 0.04332891756303637,
+   "cout_moyen": 6005.465789473679,
+   "cout_moyen_ecrete": 4777.493490035765,
+   "prime_moyenne": 442.36539922476504,
+   "ratio_sp": 0.5882248760317887,
+   "ratio_sp_ecrete": 0.46794713589822245,
+   "taux_resiliation": 0.14079130648101598,
+   "resiliations": 6359.0,
+   "nb_graves": 3.0
+  },
+  "tranche_age|18-25": {
+   "exposition": 3142.748802189653,
+   "primes_acquises": 1485580.502231332,
+   "nb_sinistres_declares": 202.0,
+   "nb_sinistres": 136.0,
+   "nb_sans_suite": 27.0,
+   "nb_rejetes": 39.0,
+   "montant_paye": 483530.41,
+   "reserves": 25531.48,
+   "charge": 509061.8899999999,
+   "charge_ecretee": 509061.8899999999,
+   "frequence": 0.043274219022928107,
+   "cout_moyen": 3743.1021323529403,
+   "cout_moyen_ecrete": 3743.1021323529403,
+   "prime_moyenne": 472.70100021875146,
+   "ratio_sp": 0.34266866671674295,
+   "ratio_sp_ecrete": 0.34266866671674295,
+   "taux_resiliation": 0.1425503685461161,
+   "resiliations": 448.0,
+   "nb_graves": 0.0
+  },
+  "tranche_age|26-35": {
+   "exposition": 8183.819301848996,
+   "primes_acquises": 3465211.1923614084,
+   "nb_sinistres_declares": 437.0,
+   "nb_sinistres": 327.0,
+   "nb_sans_suite": 51.0,
+   "nb_rejetes": 59.0,
+   "montant_paye": 1407874.3500000008,
+   "reserves": 107083.59,
+   "charge": 1514957.940000001,
+   "charge_ecretee": 1488081.410000001,
+   "frequence": 0.03995689395611654,
+   "cout_moyen": 4632.898899082572,
+   "cout_moyen_ecrete": 4550.707675840982,
+   "prime_moyenne": 423.4222512193668,
+   "ratio_sp": 0.4371906518539251,
+   "ratio_sp_ecrete": 0.42943455027511057,
+   "taux_resiliation": 0.13624445492681939,
+   "resiliations": 1115.0,
+   "nb_graves": 1.0
+  },
+  "tranche_age|36-45": {
+   "exposition": 11202.28336755878,
+   "primes_acquises": 4765786.081560532,
+   "nb_sinistres_declares": 673.0,
+   "nb_sinistres": 459.0,
+   "nb_sans_suite": 88.0,
+   "nb_rejetes": 126.0,
+   "montant_paye": 4894020.639999999,
+   "reserves": 77209.34,
+   "charge": 4971229.9799999995,
+   "charge_ecretee": 2594964.7199999997,
+   "frequence": 0.04097378944450197,
+   "cout_moyen": 10830.566405228758,
+   "cout_moyen_ecrete": 5653.517908496731,
+   "prime_moyenne": 425.42988114030356,
+   "ratio_sp": 1.0431080822604182,
+   "ratio_sp_ecrete": 0.5444987826961575,
+   "taux_resiliation": 0.14202461657124757,
+   "resiliations": 1591.0,
+   "nb_graves": 2.0
+  },
+  "tranche_age|46-55": {
+   "exposition": 10522.321697469546,
+   "primes_acquises": 4561444.1613962175,
+   "nb_sinistres_declares": 660.0,
+   "nb_sinistres": 461.0,
+   "nb_sans_suite": 94.0,
+   "nb_rejetes": 105.0,
+   "montant_paye": 1873246.8499999996,
+   "reserves": 102372.56000000001,
+   "charge": 1975619.4099999997,
+   "charge_ecretee": 1975619.4099999997,
+   "frequence": 0.04381162382735963,
+   "cout_moyen": 4285.508481561821,
+   "cout_moyen_ecrete": 4285.508481561821,
+   "prime_moyenne": 433.5016826650694,
+   "ratio_sp": 0.43311270292855675,
+   "ratio_sp_ecrete": 0.43311270292855675,
+   "taux_resiliation": 0.13913279237148482,
+   "resiliations": 1464.0,
+   "nb_graves": 0.0
+  },
+  "tranche_age|56-65": {
+   "exposition": 5948.495550992803,
+   "primes_acquises": 2542793.3350307727,
+   "nb_sinistres_declares": 330.0,
+   "nb_sinistres": 241.0,
+   "nb_sans_suite": 35.0,
+   "nb_rejetes": 54.0,
+   "montant_paye": 1227800.1199999999,
+   "reserves": 108230.93000000002,
+   "charge": 1336031.0499999998,
+   "charge_ecretee": 1336031.0499999998,
+   "frequence": 0.04051444570043885,
+   "cout_moyen": 5543.697302904564,
+   "cout_moyen_ecrete": 5543.697302904564,
+   "prime_moyenne": 427.4683091267305,
+   "ratio_sp": 0.525418653413228,
+   "ratio_sp_ecrete": 0.525418653413228,
+   "taux_resiliation": 0.13818620068780388,
+   "resiliations": 822.0,
+   "nb_graves": 0.0
+  },
+  "tranche_age|66+": {
+   "exposition": 3077.694729636652,
+   "primes_acquises": 1439354.8031211633,
+   "nb_sinistres_declares": 206.0,
+   "nb_sinistres": 130.0,
+   "nb_sans_suite": 31.0,
+   "nb_rejetes": 45.0,
+   "montant_paye": 482681.07999999984,
+   "reserves": 30027.880000000005,
+   "charge": 512708.95999999985,
+   "charge_ecretee": 512708.95999999985,
+   "frequence": 0.042239406900289815,
+   "cout_moyen": 3943.915076923076,
+   "cout_moyen_ecrete": 3943.915076923076,
+   "prime_moyenne": 467.67302463785654,
+   "ratio_sp": 0.35620748886113285,
+   "ratio_sp_ecrete": 0.35620748886113285,
+   "taux_resiliation": 0.14751300563639674,
+   "resiliations": 454.0,
+   "nb_graves": 0.0
+  },
+  "tranche_age|Inconnu": {
+   "exposition": 3088.7775496228874,
+   "primes_acquises": 1719767.9189048638,
+   "nb_sinistres_declares": 292.0,
+   "nb_sinistres": 203.0,
+   "nb_sans_suite": 39.0,
+   "nb_rejetes": 50.0,
+   "montant_paye": 851847.6099999998,
+   "reserves": 81239.71,
+   "charge": 933087.3199999994,
+   "charge_ecretee": 933087.3199999994,
+   "frequence": 0.06572179340813472,
+   "cout_moyen": 4596.4892610837405,
+   "cout_moyen_ecrete": 4596.4892610837405,
+   "prime_moyenne": 556.7794673704593,
+   "ratio_sp": 0.5425658367869677,
+   "ratio_sp_ecrete": 0.5425658367869677,
+   "taux_resiliation": 0.15054499475262387,
+   "resiliations": 465.0,
+   "nb_graves": 0.0
+  },
+  "zone_risque|1": {
+   "exposition": 8972.939082821782,
+   "primes_acquises": 3477896.9457905735,
+   "nb_sinistres_declares": 447.0,
+   "nb_sinistres": 307.0,
+   "nb_sans_suite": 60.0,
+   "nb_rejetes": 80.0,
+   "montant_paye": 1510010.14,
+   "reserves": 84363.06000000001,
+   "charge": 1594373.1999999995,
+   "charge_ecretee": 1567496.6699999995,
+   "frequence": 0.0342139846449794,
+   "cout_moyen": 5193.398045602604,
+   "cout_moyen_ecrete": 5105.852345276871,
+   "prime_moyenne": 387.59841270390694,
+   "ratio_sp": 0.45843025968027257,
+   "ratio_sp_ecrete": 0.45070244875921306,
+   "taux_resiliation": 0.13797040062047067,
+   "resiliations": 1238.0,
+   "nb_graves": 1.0
+  },
+  "zone_risque|2": {
+   "exposition": 11271.13757700505,
+   "primes_acquises": 4781481.019986268,
+   "nb_sinistres_declares": 656.0,
+   "nb_sinistres": 456.0,
+   "nb_sans_suite": 96.0,
+   "nb_rejetes": 104.0,
+   "montant_paye": 2082401.8299999996,
+   "reserves": 91868.99,
+   "charge": 2174270.8200000003,
+   "charge_ecretee": 2174270.8200000003,
+   "frequence": 0.04045731825067187,
+   "cout_moyen": 4768.137763157895,
+   "cout_moyen_ecrete": 4768.137763157895,
+   "prime_moyenne": 424.22346345423597,
+   "ratio_sp": 0.4547274810695044,
+   "ratio_sp_ecrete": 0.4547274810695044,
+   "taux_resiliation": 0.1404472254184508,
+   "resiliations": 1583.0,
+   "nb_graves": 0.0
+  },
+  "zone_risque|3": {
+   "exposition": 11288.487337443132,
+   "primes_acquises": 5048465.95101982,
+   "nb_sinistres_declares": 710.0,
+   "nb_sinistres": 501.0,
+   "nb_sans_suite": 89.0,
+   "nb_rejetes": 120.0,
+   "montant_paye": 2364811.2600000016,
+   "reserves": 191184.69,
+   "charge": 2555995.9500000007,
+   "charge_ecretee": 2505705.360000001,
+   "frequence": 0.04438149993207838,
+   "cout_moyen": 5101.788323353295,
+   "cout_moyen_ecrete": 5001.407904191618,
+   "prime_moyenne": 447.2225374496729,
+   "ratio_sp": 0.5062916091339934,
+   "ratio_sp_ecrete": 0.49633005041736167,
+   "taux_resiliation": 0.14395197083757957,
+   "resiliations": 1625.0,
+   "nb_graves": 1.0
+  },
+  "zone_risque|4": {
+   "exposition": 8907.104722794491,
+   "primes_acquises": 4293769.87348389,
+   "nb_sinistres_declares": 611.0,
+   "nb_sinistres": 422.0,
+   "nb_sans_suite": 75.0,
+   "nb_rejetes": 114.0,
+   "montant_paye": 4080638.6700000013,
+   "reserves": 66344.38,
+   "charge": 4146983.0500000003,
+   "charge_ecretee": 1821008.3799999992,
+   "frequence": 0.04737790933568398,
+   "cout_moyen": 9826.974052132702,
+   "cout_moyen_ecrete": 4315.185734597155,
+   "prime_moyenne": 482.06123169244313,
+   "ratio_sp": 0.9658139984654582,
+   "ratio_sp_ecrete": 0.4241047922119927,
+   "taux_resiliation": 0.14168464829770896,
+   "resiliations": 1262.0,
+   "nb_graves": 1.0
+  },
+  "zone_risque|5": {
+   "exposition": 4726.472279260467,
+   "primes_acquises": 2378324.204325781,
+   "nb_sinistres_declares": 376.0,
+   "nb_sinistres": 271.0,
+   "nb_sans_suite": 45.0,
+   "nb_rejetes": 60.0,
+   "montant_paye": 1183139.1600000001,
+   "reserves": 97934.37,
+   "charge": 1281073.5299999998,
+   "charge_ecretee": 1281073.5299999998,
+   "frequence": 0.05733663163309662,
+   "cout_moyen": 4727.208597785977,
+   "cout_moyen_ecrete": 4727.208597785977,
+   "prime_moyenne": 503.1922465221585,
+   "ratio_sp": 0.538645457869006,
+   "ratio_sp_ecrete": 0.538645457869006,
+   "taux_resiliation": 0.13773486049131328,
+   "resiliations": 651.0,
+   "nb_graves": 0.0
+  }
+ },
+ "kpi_annuel": [
+  {
+   "periode": "2020",
+   "exposition": 1855.0746064336486,
+   "primes_acquises": 825234.4741683812,
+   "nb_sinistres": 98.0,
+   "charge": 500161.24999999994,
+   "charge_ecretee": 500161.24999999994,
+   "montant_paye": 500161.24999999994,
+   "reserves": 0.0,
+   "frequence": 0.052828063981967516,
+   "cout_moyen": 5103.686224489796,
+   "prime_moyenne": 444.8524449131894,
+   "ratio_sp": 0.6060838048531972,
+   "ratio_sp_ecrete": 0.6060838048531972,
+   "taux_resiliation": 0.15740606819116854,
+   "nb_graves": 0.0,
+   "nb_sans_suite": 13.0,
+   "nb_rejetes": 18.0
+  },
+  {
+   "periode": "2021",
+   "exposition": 5148.928131416866,
+   "primes_acquises": 2288947.193730337,
+   "nb_sinistres": 226.0,
+   "charge": 940548.0899999996,
+   "charge_ecretee": 940548.0899999996,
+   "montant_paye": 940548.0899999996,
+   "reserves": 0.0,
+   "frequence": 0.043892630511005025,
+   "cout_moyen": 4161.717212389379,
+   "prime_moyenne": 444.5482895292368,
+   "ratio_sp": 0.41090860137632623,
+   "ratio_sp_ecrete": 0.41090860137632623,
+   "taux_resiliation": 0.14488452372216704,
+   "nb_graves": 0.0,
+   "nb_sans_suite": 51.0,
+   "nb_rejetes": 59.0
+  },
+  {
+   "periode": "2022",
+   "exposition": 8067.279945244534,
+   "primes_acquises": 3573885.470362731,
+   "nb_sinistres": 380.0,
+   "charge": 1866940.2499999998,
+   "charge_ecretee": 1840063.7199999995,
+   "montant_paye": 1866940.2499999998,
+   "reserves": 0.0,
+   "frequence": 0.047103856885988046,
+   "cout_moyen": 4913.000657894736,
+   "prime_moyenne": 443.00997295494244,
+   "ratio_sp": 0.5223839055509842,
+   "ratio_sp_ecrete": 0.5148636505727876,
+   "taux_resiliation": 0.13610535489688125,
+   "nb_graves": 1.0,
+   "nb_sans_suite": 56.0,
+   "nb_rejetes": 93.0
+  },
+  {
+   "periode": "2023",
+   "exposition": 10543.556468175426,
+   "primes_acquises": 4659118.804626915,
+   "nb_sinistres": 444.0,
+   "charge": 4318258.65,
+   "charge_ecretee": 1992283.98,
+   "montant_paye": 4318258.65,
+   "reserves": 0.0,
+   "frequence": 0.04211102784341939,
+   "cout_moyen": 9725.80777027027,
+   "prime_moyenne": 441.8925263681146,
+   "ratio_sp": 0.9268402097219736,
+   "ratio_sp_ecrete": 0.42760961107527173,
+   "taux_resiliation": 0.14975971388459283,
+   "nb_graves": 1.0,
+   "nb_sans_suite": 74.0,
+   "nb_rejetes": 99.0
+  },
+  {
+   "periode": "2024",
+   "exposition": 12668.235455170576,
+   "primes_acquises": 5594612.635756388,
+   "nb_sinistres": 535.0,
+   "charge": 2772390.420000001,
+   "charge_ecretee": 2722099.8299999996,
+   "montant_paye": 2730960.87,
+   "reserves": 41429.549999999996,
+   "frequence": 0.04223161164735364,
+   "cout_moyen": 5182.0381682243005,
+   "prime_moyenne": 441.6252488797034,
+   "ratio_sp": 0.49554644807417936,
+   "ratio_sp_ecrete": 0.4865573377864388,
+   "taux_resiliation": 0.1356147828227169,
+   "nb_graves": 1.0,
+   "nb_sans_suite": 115.0,
+   "nb_rejetes": 141.0
+  },
+  {
+   "periode": "2025",
+   "exposition": 6883.066392882105,
+   "primes_acquises": 3038139.415961686,
+   "nb_sinistres": 274.0,
+   "charge": 1354397.89,
+   "charge_ecretee": 1354397.89,
+   "montant_paye": 864131.95,
+   "reserves": 490265.94,
+   "frequence": 0.03980783917518913,
+   "cout_moyen": 4943.057992700729,
+   "prime_moyenne": 441.3933038773935,
+   "ratio_sp": 0.4457984656281093,
+   "ratio_sp_ecrete": 0.4457984656281093,
+   "taux_resiliation": 0.13453306232198955,
+   "nb_graves": 0.0,
+   "nb_sans_suite": 56.0,
+   "nb_rejetes": 68.0
+  }
+ ],
+ "graves": [
+  {
+   "sinistre_id": 1129,
+   "garantie": "COLLISION",
+   "annee_survenance": 2023,
+   "charge": 2475974.67,
+   "reserve_initiale": 1252690.25,
+   "nb_paiements": 3,
+   "region": "IDF",
+   "zone_risque": 4,
+   "canal": "AGENT",
+   "tranche_age": "36-45"
+  },
+  {
+   "sinistre_id": 1826,
+   "garantie": "RC",
+   "annee_survenance": 2024,
+   "charge": 200290.59,
+   "reserve_initiale": 140764.3,
+   "nb_paiements": 1,
+   "region": "IDF",
+   "zone_risque": 3,
+   "canal": "AGENT",
+   "tranche_age": "36-45"
+  },
+  {
+   "sinistre_id": 589,
+   "garantie": "VOL",
+   "annee_survenance": 2022,
+   "charge": 176876.53,
+   "reserve_initiale": 152928.52,
+   "nb_paiements": 2,
+   "region": "BRE",
+   "zone_risque": 1,
+   "canal": "AGENT",
+   "tranche_age": "26-35"
+  }
+ ],
+ "charge_totale": 11752696.550000004,
+ "decomposition": [
+  {
+   "annee": 2020,
+   "mesure": "brut",
+   "exposition": 1855.0746064336486,
+   "primes_acquises": 825234.4741683812,
+   "nb_sinistres": 98.0,
+   "charge": 500161.24999999994,
+   "frequence": 0.052828063981967516,
+   "cout_moyen": 5103.686224489796,
+   "prime_moyenne": 444.8524449131894,
+   "sp": 0.6060838048531972,
+   "delta_sp": null,
+   "effet_frequence": null,
+   "effet_cout_moyen": null,
+   "effet_prime_moyenne": null,
+   "effet_volume_sur_sp": 0.0,
+   "delta_charge": null,
+   "effet_volume_sur_charge": null,
+   "effet_frequence_sur_charge": null,
+   "effet_cout_sur_charge": null,
+   "statut_annee": "montée en charge du portefeuille"
+  },
+  {
+   "annee": 2021,
+   "mesure": "brut",
+   "exposition": 5148.928131416866,
+   "primes_acquises": 2288947.193730337,
+   "nb_sinistres": 226.0,
+   "charge": 940548.0899999996,
+   "frequence": 0.043892630511005025,
+   "cout_moyen": 4161.717212389379,
+   "prime_moyenne": 444.5482895292368,
+   "sp": 0.41090860137632623,
+   "delta_sp": -0.195175203476871,
+   "effet_frequence": -0.09305402269716771,
+   "effet_cout_moyen": -0.102464657134138,
+   "effet_prime_moyenne": 0.00034347635443468636,
+   "effet_volume_sur_sp": 0.0,
+   "delta_charge": 440386.8399999997,
+   "effet_volume_sur_charge": 711879.6042714313,
+   "effet_frequence_sur_charge": -129212.68632965429,
+   "effet_cout_sur_charge": -142280.07794177742,
+   "statut_annee": "complète"
+  },
+  {
+   "annee": 2022,
+   "mesure": "brut",
+   "exposition": 8067.279945244534,
+   "primes_acquises": 3573885.470362731,
+   "nb_sinistres": 380.0,
+   "charge": 1866940.2499999998,
+   "frequence": 0.047103856885988046,
+   "cout_moyen": 4913.000657894736,
+   "prime_moyenne": 443.00997295494244,
+   "sp": 0.5223839055509842,
+   "delta_sp": 0.11147530417465801,
+   "effet_frequence": 0.0327918761279941,
+   "effet_cout_moyen": 0.07707356521731293,
+   "effet_prime_moyenne": 0.0016098628293510005,
+   "effet_volume_sur_sp": 0.0,
+   "delta_charge": 926392.1600000001,
+   "effet_volume_sur_charge": 606738.4285590652,
+   "effet_frequence_sur_charge": 95408.03219746929,
+   "effet_cout_sur_charge": 224245.69924346553,
+   "statut_annee": "complète"
+  },
+  {
+   "annee": 2023,
+   "mesure": "brut",
+   "exposition": 10543.556468175426,
+   "primes_acquises": 4659118.804626915,
+   "nb_sinistres": 444.0,
+   "charge": 4318258.65,
+   "frequence": 0.04211102784341939,
+   "cout_moyen": 9725.80777027027,
+   "prime_moyenne": 441.8925263681146,
+   "sp": 0.9268402097219736,
+   "delta_sp": 0.4044563041709893,
+   "effet_frequence": -0.07903576549097391,
+   "effet_cout_moyen": 0.4817105449438409,
+   "effet_prime_moyenne": 0.0017815247181221224,
+   "effet_volume_sur_sp": 0.0,
+   "delta_charge": 2451318.4000000004,
+   "effet_volume_sur_charge": 782557.1461551718,
+   "effet_frequence_sur_charge": -327539.31919578125,
+   "effet_cout_sur_charge": 1996300.573040609,
+   "statut_annee": "complète"
+  },
+  {
+   "annee": 2024,
+   "mesure": "brut",
+   "exposition": 12668.235455170576,
+   "primes_acquises": 5594612.635756388,
+   "nb_sinistres": 535.0,
+   "charge": 2772390.420000001,
+   "frequence": 0.04223161164735364,
+   "cout_moyen": 5182.0381682243005,
+   "prime_moyenne": 441.6252488797034,
+   "sp": 0.49554644807417936,
+   "delta_sp": -0.4312937616477942,
+   "effet_frequence": 0.00196964347797023,
+   "effet_cout_moyen": -0.43368017146761967,
+   "effet_prime_moyenne": 0.00041676634185543085,
+   "effet_volume_sur_sp": 0.0,
+   "delta_charge": -1545868.2299999995,
+   "effet_volume_sur_charge": 640414.6324388895,
+   "effet_frequence_sur_charge": 9974.73423002574,
+   "effet_cout_sur_charge": -2196257.5966689144,
+   "statut_annee": "à consolider (réserves encore ouvertes)"
+  },
+  {
+   "annee": 2025,
+   "mesure": "brut",
+   "exposition": 6883.066392882105,
+   "primes_acquises": 3038139.415961686,
+   "nb_sinistres": 274.0,
+   "charge": 1354397.89,
+   "frequence": 0.03980783917518913,
+   "cout_moyen": 4943.057992700729,
+   "prime_moyenne": 441.3933038773935,
+   "sp": 0.4457984656281093,
+   "delta_sp": -0.04974798244607004,
+   "effet_frequence": -0.027793259857714525,
+   "effet_cout_moyen": -0.022201757981161394,
+   "effet_prime_moyenne": 0.0002470353928058865,
+   "effet_volume_sur_sp": 0.0,
+   "delta_charge": -1417992.530000001,
+   "effet_volume_sur_charge": -1207537.334577688,
+   "effet_frequence_sur_charge": -116996.37659155094,
+   "effet_cout_sur_charge": -93458.81883076194,
+   "statut_annee": "incomplète (6 mois, sinistres récents non développés)"
+  },
+  {
+   "annee": 2020,
+   "mesure": "ecrete",
+   "exposition": 1855.0746064336486,
+   "primes_acquises": 825234.4741683812,
+   "nb_sinistres": 98.0,
+   "charge": 500161.24999999994,
+   "frequence": 0.052828063981967516,
+   "cout_moyen": 5103.686224489796,
+   "prime_moyenne": 444.8524449131894,
+   "sp": 0.6060838048531972,
+   "delta_sp": null,
+   "effet_frequence": null,
+   "effet_cout_moyen": null,
+   "effet_prime_moyenne": null,
+   "effet_volume_sur_sp": 0.0,
+   "delta_charge": null,
+   "effet_volume_sur_charge": null,
+   "effet_frequence_sur_charge": null,
+   "effet_cout_sur_charge": null,
+   "statut_annee": "montée en charge du portefeuille"
+  },
+  {
+   "annee": 2021,
+   "mesure": "ecrete",
+   "exposition": 5148.928131416866,
+   "primes_acquises": 2288947.193730337,
+   "nb_sinistres": 226.0,
+   "charge": 940548.0899999996,
+   "frequence": 0.043892630511005025,
+   "cout_moyen": 4161.717212389379,
+   "prime_moyenne": 444.5482895292368,
+   "sp": 0.41090860137632623,
+   "delta_sp": -0.195175203476871,
+   "effet_frequence": -0.09305402269716771,
+   "effet_cout_moyen": -0.102464657134138,
+   "effet_prime_moyenne": 0.00034347635443468636,
+   "effet_volume_sur_sp": 0.0,
+   "delta_charge": 440386.8399999997,
+   "effet_volume_sur_charge": 711879.6042714313,
+   "effet_frequence_sur_charge": -129212.68632965429,
+   "effet_cout_sur_charge": -142280.07794177742,
+   "statut_annee": "complète"
+  },
+  {
+   "annee": 2022,
+   "mesure": "ecrete",
+   "exposition": 8067.279945244534,
+   "primes_acquises": 3573885.470362731,
+   "nb_sinistres": 380.0,
+   "charge": 1840063.7199999995,
+   "frequence": 0.047103856885988046,
+   "cout_moyen": 4842.272947368419,
+   "prime_moyenne": 443.00997295494244,
+   "sp": 0.5148636505727876,
+   "delta_sp": 0.10395504919646137,
+   "effet_frequence": 0.0325458361678846,
+   "effet_cout_moyen": 0.06981142912343156,
+   "effet_prime_moyenne": 0.0015977839051452233,
+   "effet_volume_sur_sp": 0.0,
+   "delta_charge": 899515.6299999999,
+   "effet_volume_sur_charge": 601865.4773610573,
+   "effet_frequence_sur_charge": 94641.77335690043,
+   "effet_cout_sur_charge": 203008.37928204233,
+   "statut_annee": "complète"
+  },
+  {
+   "annee": 2023,
+   "mesure": "ecrete",
+   "exposition": 10543.556468175426,
+   "primes_acquises": 4659118.804626915,
+   "nb_sinistres": 444.0,
+   "charge": 1992283.98,
+   "frequence": 0.04211102784341939,
+   "cout_moyen": 4487.126081081081,
+   "prime_moyenne": 441.8925263681146,
+   "sp": 0.42760961107527173,
+   "delta_sp": -0.08725403949751587,
+   "effet_frequence": -0.0526486228273193,
+   "effet_cout_moyen": -0.03579215564032363,
+   "effet_prime_moyenne": 0.0011867389701270062,
+   "effet_volume_sur_sp": 0.0,
+   "delta_charge": 152220.26000000047,
+   "effet_volume_sur_charge": 512687.0781188994,
+   "effet_frequence_sur_charge": -214585.1933658543,
+   "effet_cout_sur_charge": -145881.6247530451,
+   "statut_annee": "complète"
+  },
+  {
+   "annee": 2024,
+   "mesure": "ecrete",
+   "exposition": 12668.235455170576,
+   "primes_acquises": 5594612.635756388,
+   "nb_sinistres": 535.0,
+   "charge": 2722099.8299999996,
+   "frequence": 0.04223161164735364,
+   "cout_moyen": 5088.03706542056,
+   "prime_moyenne": 441.6252488797034,
+   "sp": 0.4865573377864388,
+   "delta_sp": 0.05894772671116705,
+   "effet_frequence": 0.0013051624962044563,
+   "effet_cout_moyen": 0.05736639860166564,
+   "effet_prime_moyenne": 0.0002761656132969743,
+   "effet_volume_sur_sp": 0.0,
+   "delta_charge": 729815.8499999996,
+   "effet_volume_sur_charge": 429260.6592292599,
+   "effet_frequence_sur_charge": 6685.919987354588,
+   "effet_cout_sur_charge": 293869.2707833854,
+   "statut_annee": "à consolider (réserves encore ouvertes)"
+  },
+  {
+   "annee": 2025,
+   "mesure": "ecrete",
+   "exposition": 6883.066392882105,
+   "primes_acquises": 3038139.415961686,
+   "nb_sinistres": 274.0,
+   "charge": 1354397.89,
+   "frequence": 0.03980783917518913,
+   "cout_moyen": 4943.057992700729,
+   "prime_moyenne": 441.3933038773935,
+   "sp": 0.4457984656281093,
+   "delta_sp": -0.04075887215832946,
+   "effet_frequence": -0.027535964945734886,
+   "effet_cout_moyen": -0.013467655685838907,
+   "effet_prime_moyenne": 0.00024474847324433666,
+   "effet_volume_sur_sp": 0.0,
+   "delta_charge": -1367701.9399999997,
+   "effet_volume_sur_charge": -1195255.4067056966,
+   "effet_frequence_sur_charge": -115806.40008528886,
+   "effet_cout_sur_charge": -56640.13320901442,
+   "statut_annee": "incomplète (6 mois, sinistres récents non développés)"
+  }
+ ],
+ "contrib_top": {
+  "2022|zone_risque": {
+   "amelioration": [
+    [
+     "4",
+     -0.03884257619804372
+    ],
+    [
+     "2",
+     0.005172805725595364
+    ]
+   ],
+   "degradation": [
+    [
+     "3",
+     0.07282133804263063
+    ],
+    [
+     "1",
+     0.04676586730789151
+    ]
+   ],
+   "degradation_ecrete": [
+    [
+     "3",
+     0.07282133804263063
+    ],
+    [
+     "1",
+     0.039245612329694854
+    ]
+   ]
+  },
+  "2022|produit": {
+   "amelioration": [
+    [
+     "HABITATION",
+     -0.010912607051897866
+    ],
+    [
+     "AUTO",
+     0.12238791122655593
+    ]
+   ],
+   "degradation": [
+    [
+     "AUTO",
+     0.12238791122655593
+    ],
+    [
+     "HABITATION",
+     -0.010912607051897866
+    ]
+   ],
+   "degradation_ecrete": [
+    [
+     "AUTO",
+     0.11486765624835918
+    ],
+    [
+     "HABITATION",
+     -0.010912607051897866
+    ]
+   ]
+  },
+  "2022|canal": {
+   "amelioration": [
+    [
+     "COURTIER",
+     -9.5973186358983e-05
+    ],
+    [
+     "WEB",
+     0.029204069848221964
+    ]
+   ],
+   "degradation": [
+    [
+     "AGENT",
+     0.08236720751279494
+    ],
+    [
+     "WEB",
+     0.029204069848221964
+    ]
+   ],
+   "degradation_ecrete": [
+    [
+     "AGENT",
+     0.0748469525345983
+    ],
+    [
+     "WEB",
+     0.029204069848221964
+    ]
+   ]
+  },
+  "2022|formule": {
+   "amelioration": [
+    [
+     "CONFORT",
+     0.030541204813775924
+    ],
+    [
+     "ESSENTIELLE",
+     0.0365525683055717
+    ]
+   ],
+   "degradation": [
+    [
+     "PREMIUM",
+     0.04438153105531022
+    ],
+    [
+     "ESSENTIELLE",
+     0.0365525683055717
+    ]
+   ],
+   "degradation_ecrete": [
+    [
+     "PREMIUM",
+     0.04438153105531022
+    ],
+    [
+     "ESSENTIELLE",
+     0.0365525683055717
+    ]
+   ]
+  },
+  "2022|region": {
+   "amelioration": [
+    [
+     "NOR",
+     -0.018729080490913028
+    ],
+    [
+     "IDF",
+     -0.010550373053024267
+    ]
+   ],
+   "degradation": [
+    [
+     "BRE",
+     0.04584252355896018
+    ],
+    [
+     "GES",
+     0.02438800104232744
+    ]
+   ],
+   "degradation_ecrete": [
+    [
+     "BRE",
+     0.03832226858076353
+    ],
+    [
+     "GES",
+     0.02438800104232744
+    ]
+   ]
+  },
+  "2022|tranche_age": {
+   "amelioration": [
+    [
+     "46-55",
+     -0.05837478669596846
+    ],
+    [
+     "36-45",
+     -0.0075775525005455785
+    ]
+   ],
+   "degradation": [
+    [
+     "26-35",
+     0.11436655715266264
+    ],
+    [
+     "Inconnu",
+     0.04301141581673508
+    ]
+   ],
+   "degradation_ecrete": [
+    [
+     "26-35",
+     0.10684630217446597
+    ],
+    [
+     "Inconnu",
+     0.04301141581673508
+    ]
+   ]
+  },
+  "2023|zone_risque": {
+   "amelioration": [
+    [
+     "1",
+     -0.0670257914463237
+    ],
+    [
+     "2",
+     -0.056630498302071564
+    ]
+   ],
+   "degradation": [
+    [
+     "4",
+     0.5664030961180764
+    ],
+    [
+     "5",
+     -0.008611592119047051
+    ]
+   ],
+   "degradation_ecrete": [
+    [
+     "4",
+     0.06717249747137435
+    ],
+    [
+     "5",
+     -0.008611592119047051
+    ]
+   ]
+  },
+  "2023|produit": {
+   "amelioration": [
+    [
+     "HABITATION",
+     -0.002130271404756995
+    ],
+    [
+     "AUTO",
+     0.40658657557574596
+    ]
+   ],
+   "degradation": [
+    [
+     "AUTO",
+     0.40658657557574596
+    ],
+    [
+     "HABITATION",
+     -0.002130271404756995
+    ]
+   ],
+   "degradation_ecrete": [
+    [
+     "HABITATION",
+     -0.002130271404756995
+    ],
+    [
+     "AUTO",
+     -0.0851237680927591
+    ]
+   ]
+  },
+  "2023|canal": {
+   "amelioration": [
+    [
+     "COURTIER",
+     -0.013677174580150428
+    ],
+    [
+     "WEB",
+     -0.011808640360905537
+    ]
+   ],
+   "degradation": [
+    [
+     "AGENT",
+     0.42994211911204516
+    ],
+    [
+     "WEB",
+     -0.011808640360905537
+    ]
+   ],
+   "degradation_ecrete": [
+    [
+     "WEB",
+     -0.011808640360905537
+    ],
+    [
+     "COURTIER",
+     -0.013677174580150428
+    ]
+   ]
+  },
+  "2023|formule": {
+   "amelioration": [
+    [
+     "ESSENTIELLE",
+     -0.03925275057378748
+    ],
+    [
+     "PREMIUM",
+     -0.030723362364572612
+    ]
+   ],
+   "degradation": [
+    [
+     "CONFORT",
+     0.474432417109349
+    ],
+    [
+     "PREMIUM",
+     -0.030723362364572612
+    ]
+   ],
+   "degradation_ecrete": [
+    [
+     "CONFORT",
+     -0.01727792655915586
+    ],
+    [
+     "PREMIUM",
+     -0.030723362364572612
+    ]
+   ]
+  },
+  "2023|region": {
+   "amelioration": [
+    [
+     "BRE",
+     -0.03789361402762381
+    ],
+    [
+     "PACA",
+     -0.03129392341105932
+    ]
+   ],
+   "degradation": [
+    [
+     "IDF",
+     0.5758635815611073
+    ],
+    [
+     "NOR",
+     0.004832708267245288
+    ]
+   ],
+   "degradation_ecrete": [
+    [
+     "IDF",
+     0.07663298291440555
+    ],
+    [
+     "NOR",
+     0.004832708267245288
+    ]
+   ]
+  },
+  "2023|tranche_age": {
+   "amelioration": [
+    [
+     "26-35",
+     -0.09089331929374139
+    ],
+    [
+     "Inconnu",
+     -0.043503348615908925
+    ]
+   ],
+   "degradation": [
+    [
+     "36-45",
+     0.5289324021387668
+    ],
+    [
+     "46-55",
+     0.03074591938851788
+    ]
+   ],
+   "degradation_ecrete": [
+    [
+     "46-55",
+     0.03074591938851788
+    ],
+    [
+     "36-45",
+     0.029701803492065124
+    ]
+   ]
+  },
+  "2024|zone_risque": {
+   "amelioration": [
+    [
+     "4",
+     -0.5326875353258941
+    ],
+    [
+     "5",
+     0.006323671529625784
+    ]
+   ],
+   "degradation": [
+    [
+     "3",
+     0.06003959491750059
+    ],
+    [
+     "1",
+     0.020210601358639856
+    ]
+   ],
+   "degradation_ecrete": [
+    [
+     "3",
+     0.05105048462976021
+    ],
+    [
+     "1",
+     0.020210601358639856
+    ]
+   ]
+  },
+  "2024|produit": {
+   "amelioration": [
+    [
+     "AUTO",
+     -0.44768064417984327
+    ],
+    [
+     "HABITATION",
+     0.016386882532048924
+    ]
+   ],
+   "degradation": [
+    [
+     "HABITATION",
+     0.016386882532048924
+    ],
+    [
+     "AUTO",
+     -0.44768064417984327
+    ]
+   ],
+   "degradation_ecrete": [
+    [
+     "AUTO",
+     0.04256084417911818
+    ],
+    [
+     "HABITATION",
+     0.016386882532048924
+    ]
+   ]
+  },
+  "2024|canal": {
+   "amelioration": [
+    [
+     "AGENT",
+     -0.4662790388210617
+    ],
+    [
+     "WEB",
+     0.002757413047498325
+    ]
+   ],
+   "degradation": [
+    [
+     "COURTIER",
+     0.03222786412576918
+    ],
+    [
+     "WEB",
+     0.002757413047498325
+    ]
+   ],
+   "degradation_ecrete": [
+    [
+     "COURTIER",
+     0.03222786412576918
+    ],
+    [
+     "AGENT",
+     0.02396244953789975
+    ]
+   ]
+  },
+  "2024|formule": {
+   "amelioration": [
+    [
+     "CONFORT",
+     -0.5193399678796528
+    ],
+    [
+     "PREMIUM",
+     0.028185973204146494
+    ]
+   ],
+   "degradation": [
+    [
+     "ESSENTIELLE",
+     0.05986023302771211
+    ],
+    [
+     "PREMIUM",
+     0.028185973204146494
+    ]
+   ],
+   "degradation_ecrete": [
+    [
+     "ESSENTIELLE",
+     0.050871122739971755
+    ],
+    [
+     "PREMIUM",
+     0.028185973204146494
+    ]
+   ]
+  },
+  "2024|region": {
+   "amelioration": [
+    [
+     "IDF",
+     -0.5361351493712908
+    ],
+    [
+     "BRE",
+     -0.008090249870197137
+    ]
+   ],
+   "degradation": [
+    [
+     "GES",
+     0.03085946197364875
+    ],
+    [
+     "HDF",
+     0.029425265054557875
+    ]
+   ],
+   "degradation_ecrete": [
+    [
+     "GES",
+     0.03085946197364875
+    ],
+    [
+     "HDF",
+     0.029425265054557875
+    ]
+   ]
+  },
+  "2024|tranche_age": {
+   "amelioration": [
+    [
+     "36-45",
+     -0.44113702935841353
+    ],
+    [
+     "46-55",
+     -0.025873123854999416
+    ]
+   ],
+   "degradation": [
+    [
+     "56-65",
+     0.028746396363234228
+    ],
+    [
+     "Inconnu",
+     0.00828066604046046
+    ]
+   ],
+   "degradation_ecrete": [
+    [
+     "36-45",
+     0.04910445900054777
+    ],
+    [
+     "56-65",
+     0.028746396363234228
+    ]
+   ]
+  }
+ },
+ "ic": {
+  "frequence": {
+   "valeur": 0.043328917563040366,
+   "ic": [
+    0.04143028585247115,
+    0.04529211947786456
+   ],
+   "methode": "Poisson exact (Garwood)"
+  },
+  "cout_moyen": {
+   "valeur": 6005.465789473684,
+   "ic": [
+    4391.049717769285,
+    8822.137846587018
+   ],
+   "methode": "bootstrap par contrat (B=2000)"
+  },
+  "cout_moyen_ecrete": {
+   "valeur": 4777.493490035769,
+   "ic": [
+    4361.556485851619,
+    5239.086338821363
+   ],
+   "methode": "bootstrap par contrat"
+  },
+  "prime_moyenne": {
+   "valeur": 442.36539922481364,
+   "ic": [
+    439.0798836518411,
+    445.79165347879376
+   ],
+   "methode": "bootstrap par contrat"
+  },
+  "ratio_sp": {
+   "valeur": 0.5882248760317789,
+   "ic": [
+    0.42584321500711375,
+    0.8726931705972419
+   ],
+   "methode": "bootstrap par contrat"
+  },
+  "ratio_sp_ecrete": {
+   "valeur": 0.46794713589821463,
+   "ic": [
+    0.42096266844956337,
+    0.5204900328807146
+   ],
+   "methode": "bootstrap par contrat"
+  },
+  "taux_resiliation": {
+   "valeur": 0.14079130648102897,
+   "ic": [
+    0.13735189879655504,
+    0.14429506709198126
+   ],
+   "methode": "Poisson exact"
+  },
+  "ratio_sp_ecrete|AUTO": {
+   "valeur": 0.3879037994323556,
+   "ic": [
+    0.3350030007798693,
+    0.44822172676405186
+   ],
+   "methode": "bootstrap par contrat"
+  },
+  "frequence|AUTO": {
+   "valeur": 0.044199158609999865,
+   "ic": [
+    0.04153568058982986,
+    0.04698863278878881
+   ],
+   "methode": "Poisson exact"
+  },
+  "ratio_sp_ecrete|HABITATION": {
+   "valeur": 0.6418078987450693,
+   "ic": [
+    0.55420813444432,
+    0.7369445887116132
+   ],
+   "methode": "bootstrap par contrat"
+  },
+  "frequence|HABITATION": {
+   "valeur": 0.042408725542331445,
+   "ic": [
+    0.03972798936425829,
+    0.045222758659377464
+   ],
+   "methode": "Poisson exact"
+  }
+ },
+ "test_frequence_zone": {
+  "n1": 307,
+  "e1": 8972.939082819983,
+  "n5": 271,
+  "e5": 4726.472279260778,
+  "f1": 0.03421398464498626,
+  "f5": 0.05733663163309285,
+  "rapport": 1.6758244392763235,
+  "rapport_ic": [
+   1.4232422745652096,
+   1.9732322468665755
+  ],
+  "p_value": 9.638333832361307e-10,
+  "test": "test exact conditionnel (binomial) de comparaison de deux taux de Poisson"
+ },
+ "tendance_zone": {
+  "hausse_par_zone": 0.12202831203266351,
+  "p_value": 8.266307458747089e-11
+ },
+ "test_cout_canal": {
+  "n_agent": 816,
+  "n_web": 741,
+  "moy_agent": 8281.198517156861,
+  "moy_web": 4473.6879352226715,
+  "med_agent": 2048.515,
+  "med_web": 2007.73,
+  "moy_agent_ecrete": 5336.17181372549,
+  "moy_web_ecrete": 4473.6879352226715,
+  "p_value_mw": 0.5193206447960386,
+  "diff_moy_ic": [
+   -2.121890365762436,
+   10597.665239389833
+  ],
+  "test": "Mann-Whitney bilatéral (pas d'hypothèse de normalité)"
+ },
+ "test_resiliation_canal": {
+  "t_web": 0.17898398215782982,
+  "t_agent": 0.11616121350582004,
+  "p_value": 1.947028663224941e-54,
+  "ic_web": [
+   0.1726795184970233,
+   0.1854597825695155
+  ],
+  "ic_agent": [
+   0.11134659680216138,
+   0.12113045632984171
+  ]
+ },
+ "queue": {
+  "n": 1957,
+  "moyenne": 6005.465789473685,
+  "mediane": 1997.42,
+  "p75": 5013.31,
+  "p90": 10761.542000000007,
+  "p95": 16472.12599999998,
+  "p99": 43186.912000000004,
+  "max": 2475974.67,
+  "part_top1": 0.3368303055523032,
+  "part_top5": 0.5035752395053541,
+  "part_top10": 0.6138916162180669,
+  "part_max": 0.21067290042471146,
+  "nb_sup_seuil": 3
+ },
+ "queue_garantie": [
+  {
+   "garantie": "BRIS_GLACE",
+   "count": 73.0,
+   "mean": 601.0,
+   "std": 856.0,
+   "min": 1.0,
+   "50%": 294.0,
+   "90%": 1872.0,
+   "99%": 3495.0,
+   "max": 5347.0
+  },
+  {
+   "garantie": "COLLISION",
+   "count": 419.0,
+   "mean": 9320.0,
+   "std": 120975.0,
+   "min": 10.0,
+   "50%": 1773.0,
+   "90%": 7637.0,
+   "99%": 23551.0,
+   "max": 2475975.0
+  },
+  {
+   "garantie": "DEGAT_EAUX",
+   "count": 492.0,
+   "mean": 2451.0,
+   "std": 3697.0,
+   "min": 1.0,
+   "50%": 1251.0,
+   "90%": 5147.0,
+   "99%": 18083.0,
+   "max": 34704.0
+  },
+  {
+   "garantie": "INCENDIE",
+   "count": 109.0,
+   "mean": 15987.0,
+   "std": 19632.0,
+   "min": 851.0,
+   "50%": 9163.0,
+   "90%": 36432.0,
+   "99%": 108395.0,
+   "max": 110671.0
+  },
+  {
+   "garantie": "RC",
+   "count": 432.0,
+   "mean": 7166.0,
+   "std": 12869.0,
+   "min": 27.0,
+   "50%": 3892.0,
+   "90%": 14863.0,
+   "99%": 49737.0,
+   "max": 200291.0
+  },
+  {
+   "garantie": "TEMPETE",
+   "count": 122.0,
+   "mean": 1579.0,
+   "std": 2130.0,
+   "min": 24.0,
+   "50%": 906.0,
+   "90%": 3562.0,
+   "99%": 9593.0,
+   "max": 15249.0
+  },
+  {
+   "garantie": "VOL",
+   "count": 310.0,
+   "mean": 5055.0,
+   "std": 11480.0,
+   "min": 14.0,
+   "50%": 2653.0,
+   "90%": 10399.0,
+   "99%": 35155.0,
+   "max": 176877.0
+  }
+ ],
+ "retention": [
+  {
+   "produit": "AUTO",
+   "cohorte": 2020,
+   "annee_anciennete": 0,
+   "taille_cohorte": 2061,
+   "clients_observables": 2061,
+   "clients_retenus": 2060.0,
+   "taux_retention": 0.9995147986414362,
+   "cellule_complete": true
+  },
+  {
+   "produit": "AUTO",
+   "cohorte": 2020,
+   "annee_anciennete": 1,
+   "taille_cohorte": 2061,
+   "clients_observables": 2061,
+   "clients_retenus": 1756.0,
+   "taux_retention": 0.8520135856380397,
+   "cellule_complete": true
+  },
+  {
+   "produit": "AUTO",
+   "cohorte": 2020,
+   "annee_anciennete": 2,
+   "taille_cohorte": 2061,
+   "clients_observables": 2061,
+   "clients_retenus": 1515.0,
+   "taux_retention": 0.735080058224163,
+   "cellule_complete": true
+  },
+  {
+   "produit": "AUTO",
+   "cohorte": 2020,
+   "annee_anciennete": 3,
+   "taille_cohorte": 2061,
+   "clients_observables": 2061,
+   "clients_retenus": 1281.0,
+   "taux_retention": 0.6215429403202329,
+   "cellule_complete": true
+  },
+  {
+   "produit": "AUTO",
+   "cohorte": 2020,
+   "annee_anciennete": 4,
+   "taille_cohorte": 2061,
+   "clients_observables": 2061,
+   "clients_retenus": 1111.0,
+   "taux_retention": 0.5390587093643863,
+   "cellule_complete": true
+  },
+  {
+   "produit": "AUTO",
+   "cohorte": 2020,
+   "annee_anciennete": 5,
+   "taille_cohorte": 2061,
+   "clients_observables": 1004,
+   "clients_retenus": 461.0,
+   "taux_retention": 0.4591633466135458,
+   "cellule_complete": false
+  },
+  {
+   "produit": "AUTO",
+   "cohorte": 2021,
+   "annee_anciennete": 0,
+   "taille_cohorte": 1928,
+   "clients_observables": 1928,
+   "clients_retenus": 1927.0,
+   "taux_retention": 0.9994813278008299,
+   "cellule_complete": true
+  },
+  {
+   "produit": "AUTO",
+   "cohorte": 2021,
+   "annee_anciennete": 1,
+   "taille_cohorte": 1928,
+   "clients_observables": 1928,
+   "clients_retenus": 1674.0,
+   "taux_retention": 0.8682572614107884,
+   "cellule_complete": true
+  },
+  {
+   "produit": "AUTO",
+   "cohorte": 2021,
+   "annee_anciennete": 2,
+   "taille_cohorte": 1928,
+   "clients_observables": 1928,
+   "clients_retenus": 1434.0,
+   "taux_retention": 0.7437759336099585,
+   "cellule_complete": true
+  },
+  {
+   "produit": "AUTO",
+   "cohorte": 2021,
+   "annee_anciennete": 3,
+   "taille_cohorte": 1928,
+   "clients_observables": 1928,
+   "clients_retenus": 1227.0,
+   "taux_retention": 0.6364107883817427,
+   "cellule_complete": true
+  },
+  {
+   "produit": "AUTO",
+   "cohorte": 2021,
+   "annee_anciennete": 4,
+   "taille_cohorte": 1928,
+   "clients_observables": 968,
+   "clients_retenus": 568.0,
+   "taux_retention": 0.5867768595041323,
+   "cellule_complete": false
+  },
+  {
+   "produit": "AUTO",
+   "cohorte": 2022,
+   "annee_anciennete": 0,
+   "taille_cohorte": 2004,
+   "clients_observables": 2004,
+   "clients_retenus": 2003.0,
+   "taux_retention": 0.9995009980039921,
+   "cellule_complete": true
+  },
+  {
+   "produit": "AUTO",
+   "cohorte": 2022,
+   "annee_anciennete": 1,
+   "taille_cohorte": 2004,
+   "clients_observables": 2004,
+   "clients_retenus": 1734.0,
+   "taux_retention": 0.8652694610778443,
+   "cellule_complete": true
+  },
+  {
+   "produit": "AUTO",
+   "cohorte": 2022,
+   "annee_anciennete": 2,
+   "taille_cohorte": 2004,
+   "clients_observables": 2004,
+   "clients_retenus": 1509.0,
+   "taux_retention": 0.7529940119760479,
+   "cellule_complete": true
+  },
+  {
+   "produit": "AUTO",
+   "cohorte": 2022,
+   "annee_anciennete": 3,
+   "taille_cohorte": 2004,
+   "clients_observables": 974,
+   "clients_retenus": 642.0,
+   "taux_retention": 0.6591375770020534,
+   "cellule_complete": false
+  },
+  {
+   "produit": "AUTO",
+   "cohorte": 2023,
+   "annee_anciennete": 0,
+   "taille_cohorte": 1905,
+   "clients_observables": 1905,
+   "clients_retenus": 1904.0,
+   "taux_retention": 0.9994750656167979,
+   "cellule_complete": true
+  },
+  {
+   "produit": "AUTO",
+   "cohorte": 2023,
+   "annee_anciennete": 1,
+   "taille_cohorte": 1905,
+   "clients_observables": 1905,
+   "clients_retenus": 1635.0,
+   "taux_retention": 0.8582677165354331,
+   "cellule_complete": true
+  },
+  {
+   "produit": "AUTO",
+   "cohorte": 2023,
+   "annee_anciennete": 2,
+   "taille_cohorte": 1905,
+   "clients_observables": 970,
+   "clients_retenus": 721.0,
+   "taux_retention": 0.743298969072165,
+   "cellule_complete": false
+  },
+  {
+   "produit": "AUTO",
+   "cohorte": 2024,
+   "annee_anciennete": 0,
+   "taille_cohorte": 2010,
+   "clients_observables": 2010,
+   "clients_retenus": 2009.0,
+   "taux_retention": 0.9995024875621891,
+   "cellule_complete": true
+  },
+  {
+   "produit": "AUTO",
+   "cohorte": 2024,
+   "annee_anciennete": 1,
+   "taille_cohorte": 2010,
+   "clients_observables": 977,
+   "clients_retenus": 853.0,
+   "taux_retention": 0.8730808597748209,
+   "cellule_complete": false
+  },
+  {
+   "produit": "AUTO",
+   "cohorte": 2025,
+   "annee_anciennete": 0,
+   "taille_cohorte": 484,
+   "clients_observables": 484,
+   "clients_retenus": 484.0,
+   "taux_retention": 1.0,
+   "cellule_complete": false
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2020,
+   "annee_anciennete": 0,
+   "taille_cohorte": 1861,
+   "clients_observables": 1861,
+   "clients_retenus": 1860.0,
+   "taux_retention": 0.999462654486835,
+   "cellule_complete": true
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2020,
+   "annee_anciennete": 1,
+   "taille_cohorte": 1861,
+   "clients_observables": 1861,
+   "clients_retenus": 1596.0,
+   "taux_retention": 0.8576034390112842,
+   "cellule_complete": true
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2020,
+   "annee_anciennete": 2,
+   "taille_cohorte": 1861,
+   "clients_observables": 1861,
+   "clients_retenus": 1395.0,
+   "taux_retention": 0.7495969908651263,
+   "cellule_complete": true
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2020,
+   "annee_anciennete": 3,
+   "taille_cohorte": 1861,
+   "clients_observables": 1861,
+   "clients_retenus": 1210.0,
+   "taux_retention": 0.6501880709296077,
+   "cellule_complete": true
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2020,
+   "annee_anciennete": 4,
+   "taille_cohorte": 1861,
+   "clients_observables": 1861,
+   "clients_retenus": 1053.0,
+   "taux_retention": 0.5658248253627082,
+   "cellule_complete": true
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2020,
+   "annee_anciennete": 5,
+   "taille_cohorte": 1861,
+   "clients_observables": 927,
+   "clients_retenus": 455.0,
+   "taux_retention": 0.49083063646170444,
+   "cellule_complete": false
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2021,
+   "annee_anciennete": 0,
+   "taille_cohorte": 1847,
+   "clients_observables": 1847,
+   "clients_retenus": 1847.0,
+   "taux_retention": 1.0,
+   "cellule_complete": true
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2021,
+   "annee_anciennete": 1,
+   "taille_cohorte": 1847,
+   "clients_observables": 1847,
+   "clients_retenus": 1581.0,
+   "taux_retention": 0.8559826746074716,
+   "cellule_complete": true
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2021,
+   "annee_anciennete": 2,
+   "taille_cohorte": 1847,
+   "clients_observables": 1847,
+   "clients_retenus": 1362.0,
+   "taux_retention": 0.7374120194910666,
+   "cellule_complete": true
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2021,
+   "annee_anciennete": 3,
+   "taille_cohorte": 1847,
+   "clients_observables": 1847,
+   "clients_retenus": 1169.0,
+   "taux_retention": 0.6329182458040065,
+   "cellule_complete": true
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2021,
+   "annee_anciennete": 4,
+   "taille_cohorte": 1847,
+   "clients_observables": 895,
+   "clients_retenus": 471.0,
+   "taux_retention": 0.5262569832402234,
+   "cellule_complete": false
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2022,
+   "annee_anciennete": 0,
+   "taille_cohorte": 1935,
+   "clients_observables": 1935,
+   "clients_retenus": 1935.0,
+   "taux_retention": 1.0,
+   "cellule_complete": true
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2022,
+   "annee_anciennete": 1,
+   "taille_cohorte": 1935,
+   "clients_observables": 1935,
+   "clients_retenus": 1672.0,
+   "taux_retention": 0.8640826873385012,
+   "cellule_complete": true
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2022,
+   "annee_anciennete": 2,
+   "taille_cohorte": 1935,
+   "clients_observables": 1935,
+   "clients_retenus": 1418.0,
+   "taux_retention": 0.7328165374677003,
+   "cellule_complete": true
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2022,
+   "annee_anciennete": 3,
+   "taille_cohorte": 1935,
+   "clients_observables": 979,
+   "clients_retenus": 643.0,
+   "taux_retention": 0.6567926455566905,
+   "cellule_complete": false
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2023,
+   "annee_anciennete": 0,
+   "taille_cohorte": 1848,
+   "clients_observables": 1848,
+   "clients_retenus": 1848.0,
+   "taux_retention": 1.0,
+   "cellule_complete": true
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2023,
+   "annee_anciennete": 1,
+   "taille_cohorte": 1848,
+   "clients_observables": 1848,
+   "clients_retenus": 1608.0,
+   "taux_retention": 0.8701298701298701,
+   "cellule_complete": true
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2023,
+   "annee_anciennete": 2,
+   "taille_cohorte": 1848,
+   "clients_observables": 934,
+   "clients_retenus": 686.0,
+   "taux_retention": 0.734475374732334,
+   "cellule_complete": false
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2024,
+   "annee_anciennete": 0,
+   "taille_cohorte": 1868,
+   "clients_observables": 1868,
+   "clients_retenus": 1868.0,
+   "taux_retention": 1.0,
+   "cellule_complete": true
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2024,
+   "annee_anciennete": 1,
+   "taille_cohorte": 1868,
+   "clients_observables": 933,
+   "clients_retenus": 811.0,
+   "taux_retention": 0.8692390139335477,
+   "cellule_complete": false
+  },
+  {
+   "produit": "HABITATION",
+   "cohorte": 2025,
+   "annee_anciennete": 0,
+   "taille_cohorte": 468,
+   "clients_observables": 468,
+   "clients_retenus": 468.0,
+   "taux_retention": 1.0,
+   "cellule_complete": false
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2020,
+   "annee_anciennete": 0,
+   "taille_cohorte": 3697,
+   "clients_observables": 3697,
+   "clients_retenus": 3695.0,
+   "taux_retention": 0.9994590208276981,
+   "cellule_complete": true
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2020,
+   "annee_anciennete": 1,
+   "taille_cohorte": 3697,
+   "clients_observables": 3697,
+   "clients_retenus": 3212.0,
+   "taux_retention": 0.8688125507167974,
+   "cellule_complete": true
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2020,
+   "annee_anciennete": 2,
+   "taille_cohorte": 3697,
+   "clients_observables": 3697,
+   "clients_retenus": 2914.0,
+   "taux_retention": 0.7882066540438193,
+   "cellule_complete": true
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2020,
+   "annee_anciennete": 3,
+   "taille_cohorte": 3697,
+   "clients_observables": 3697,
+   "clients_retenus": 2721.0,
+   "taux_retention": 0.7360021639166892,
+   "cellule_complete": true
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2020,
+   "annee_anciennete": 4,
+   "taille_cohorte": 3697,
+   "clients_observables": 3697,
+   "clients_retenus": 2558.0,
+   "taux_retention": 0.6919123613740871,
+   "cellule_complete": true
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2020,
+   "annee_anciennete": 5,
+   "taille_cohorte": 3697,
+   "clients_observables": 1879,
+   "clients_retenus": 1223.0,
+   "taux_retention": 0.6508781266631187,
+   "cellule_complete": false
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2021,
+   "annee_anciennete": 0,
+   "taille_cohorte": 3222,
+   "clients_observables": 3222,
+   "clients_retenus": 3221.0,
+   "taux_retention": 0.999689633767846,
+   "cellule_complete": true
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2021,
+   "annee_anciennete": 1,
+   "taille_cohorte": 3222,
+   "clients_observables": 3222,
+   "clients_retenus": 2818.0,
+   "taux_retention": 0.8746120422098076,
+   "cellule_complete": true
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2021,
+   "annee_anciennete": 2,
+   "taille_cohorte": 3222,
+   "clients_observables": 3222,
+   "clients_retenus": 2574.0,
+   "taux_retention": 0.7988826815642458,
+   "cellule_complete": true
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2021,
+   "annee_anciennete": 3,
+   "taille_cohorte": 3222,
+   "clients_observables": 3222,
+   "clients_retenus": 2388.0,
+   "taux_retention": 0.7411545623836127,
+   "cellule_complete": true
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2021,
+   "annee_anciennete": 4,
+   "taille_cohorte": 3222,
+   "clients_observables": 1645,
+   "clients_retenus": 1175.0,
+   "taux_retention": 0.7142857142857143,
+   "cellule_complete": false
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2022,
+   "annee_anciennete": 0,
+   "taille_cohorte": 2913,
+   "clients_observables": 2913,
+   "clients_retenus": 2912.0,
+   "taux_retention": 0.9996567112941984,
+   "cellule_complete": true
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2022,
+   "annee_anciennete": 1,
+   "taille_cohorte": 2913,
+   "clients_observables": 2913,
+   "clients_retenus": 2565.0,
+   "taux_retention": 0.8805355303810505,
+   "cellule_complete": true
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2022,
+   "annee_anciennete": 2,
+   "taille_cohorte": 2913,
+   "clients_observables": 2913,
+   "clients_retenus": 2337.0,
+   "taux_retention": 0.8022657054582905,
+   "cellule_complete": true
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2022,
+   "annee_anciennete": 3,
+   "taille_cohorte": 2913,
+   "clients_observables": 1507,
+   "clients_retenus": 1140.0,
+   "taux_retention": 0.7564698075646981,
+   "cellule_complete": false
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2023,
+   "annee_anciennete": 0,
+   "taille_cohorte": 2482,
+   "clients_observables": 2482,
+   "clients_retenus": 2482.0,
+   "taux_retention": 1.0,
+   "cellule_complete": true
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2023,
+   "annee_anciennete": 1,
+   "taille_cohorte": 2482,
+   "clients_observables": 2482,
+   "clients_retenus": 2186.0,
+   "taux_retention": 0.8807413376309428,
+   "cellule_complete": true
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2023,
+   "annee_anciennete": 2,
+   "taille_cohorte": 2482,
+   "clients_observables": 1317,
+   "clients_retenus": 1043.0,
+   "taux_retention": 0.7919514047076689,
+   "cellule_complete": false
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2024,
+   "annee_anciennete": 0,
+   "taille_cohorte": 2178,
+   "clients_observables": 2178,
+   "clients_retenus": 2177.0,
+   "taux_retention": 0.9995408631772268,
+   "cellule_complete": true
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2024,
+   "annee_anciennete": 1,
+   "taille_cohorte": 2178,
+   "clients_observables": 1116,
+   "clients_retenus": 993.0,
+   "taux_retention": 0.8897849462365591,
+   "cellule_complete": false
+  },
+  {
+   "produit": "TOUS",
+   "cohorte": 2025,
+   "annee_anciennete": 0,
+   "taille_cohorte": 485,
+   "clients_observables": 485,
+   "clients_retenus": 485.0,
+   "taux_retention": 1.0,
+   "cellule_complete": false
+  }
+ ],
+ "retention_detention": [
+  {
+   "detention_origine": "Mono-détenteur",
+   "annee_anciennete": 1,
+   "clients_observables": 13030,
+   "clients_retenus": 11387.0,
+   "taux_retention": 0.8739063699155795
+  },
+  {
+   "detention_origine": "Mono-détenteur",
+   "annee_anciennete": 2,
+   "clients_observables": 10839,
+   "clients_retenus": 8587.0,
+   "taux_retention": 0.79223175569702
+  },
+  {
+   "detention_origine": "Mono-détenteur",
+   "annee_anciennete": 3,
+   "clients_observables": 8191,
+   "clients_retenus": 6047.0,
+   "taux_retention": 0.7382492980100109
+  },
+  {
+   "detention_origine": "Mono-détenteur",
+   "annee_anciennete": 4,
+   "clients_observables": 5195,
+   "clients_retenus": 3622.0,
+   "taux_retention": 0.6972088546679499
+  },
+  {
+   "detention_origine": "Multi-détenteur",
+   "annee_anciennete": 1,
+   "clients_observables": 400,
+   "clients_retenus": 387.0,
+   "taux_retention": 0.9675
+  },
+  {
+   "detention_origine": "Multi-détenteur",
+   "annee_anciennete": 2,
+   "clients_observables": 310,
+   "clients_retenus": 281.0,
+   "taux_retention": 0.9064516129032258
+  },
+  {
+   "detention_origine": "Multi-détenteur",
+   "annee_anciennete": 3,
+   "clients_observables": 235,
+   "clients_retenus": 202.0,
+   "taux_retention": 0.8595744680851064
+  },
+  {
+   "detention_origine": "Multi-détenteur",
+   "annee_anciennete": 4,
+   "clients_observables": 147,
+   "clients_retenus": 111.0,
+   "taux_retention": 0.7551020408163265
+  }
+ ],
+ "detention": {
+  "n": 14977.0,
+  "part_origine": 0.030713761100353877,
+  "part_tout_temps": 0.35000333845229353
+ },
+ "test_retention_detention": {
+  "p_value": 3.19085987597756e-08
+ },
+ "valeur": {
+  "n_clients": 14977,
+  "valeur_totale": 8758936.934606433,
+  "primes": 19979937.994606435,
+  "payes": 11221001.060000002,
+  "part_negatifs": 0.06743673632903786,
+  "nb_negatifs": 1010,
+  "perte_negatifs": -8953601.01983573,
+  "part_top20_valeur_positive": 0.48150037856112704,
+  "part_valeur_top20": 0.9737019222784766,
+  "pire_client": -2473162.9592265575,
+  "part_sans_sinistre": 0.8859584696534687,
+  "part_clients_creant_100pct": 0.9322294184416104
+ },
+ "profils_valeur": [
+  {
+   "groupe": "Autres",
+   "n": 11982,
+   "valeur_moy": 1050.6290222717146,
+   "primes_moy": 1096.2252699766054,
+   "payes_moy": 45.59624770489067,
+   "expo_moy": 2.6899105217260058,
+   "nb_contrats": 1.3121348689701218,
+   "part_multi": 0.3121348689701218,
+   "zone_moy": 2.9566015690201968,
+   "part_premium": 0.24361542313470205,
+   "part_web": 0.4010181939576031,
+   "part_sinistre": 0.046319479218828244
+  },
+  {
+   "groupe": "Bottom 10 %",
+   "n": 1497,
+   "valeur_moy": -5963.290629998303,
+   "primes_moy": 1122.1197440831927,
+   "payes_moy": 7085.410374081496,
+   "expo_moy": 2.502843697890875,
+   "nb_contrats": 1.3219772879091516,
+   "part_multi": 0.32197728790915164,
+   "zone_moy": 3.01937207748831,
+   "part_premium": 0.22578490313961255,
+   "part_web": 0.4134936539746159,
+   "part_sinistre": 0.7027388109552438
+  },
+  {
+   "groupe": "Top 10 %",
+   "n": 1498,
+   "valeur_moy": 3402.767732212423,
+   "primes_moy": 3448.033079341929,
+   "payes_moy": 45.26534712950601,
+   "expo_moy": 6.134096203105391,
+   "nb_contrats": 1.6809078771695594,
+   "part_multi": 0.6809078771695594,
+   "zone_moy": 3.4198931909212282,
+   "part_premium": 0.38050734312416556,
+   "part_web": 0.3638184245660881,
+   "part_sinistre": 0.06742323097463285
+  }
+ ],
+ "delais": [
+  {
+   "garantie": "BRIS_GLACE",
+   "type_delai": "Déclaration",
+   "ordre": 1,
+   "n": 334,
+   "moyenne": 8.778443113772456,
+   "p25": 2.0,
+   "mediane": 6.0,
+   "p75": 11.75,
+   "p90": 18.69999999999999,
+   "maximum": 65
+  },
+  {
+   "garantie": "COLLISION",
+   "type_delai": "Déclaration",
+   "ordre": 1,
+   "n": 692,
+   "moyenne": 8.351156069364162,
+   "p25": 2.0,
+   "mediane": 5.0,
+   "p75": 11.0,
+   "p90": 20.0,
+   "maximum": 64
+  },
+  {
+   "garantie": "DEGAT_EAUX",
+   "type_delai": "Déclaration",
+   "ordre": 1,
+   "n": 589,
+   "moyenne": 8.237691001697792,
+   "p25": 2.0,
+   "mediane": 5.0,
+   "p75": 11.0,
+   "p90": 19.200000000000045,
+   "maximum": 72
+  },
+  {
+   "garantie": "INCENDIE",
+   "type_delai": "Déclaration",
+   "ordre": 1,
+   "n": 108,
+   "moyenne": 9.444444444444445,
+   "p25": 3.0,
+   "mediane": 6.0,
+   "p75": 11.25,
+   "p90": 23.0,
+   "maximum": 48
+  },
+  {
+   "garantie": "RC",
+   "type_delai": "Déclaration",
+   "ordre": 1,
+   "n": 443,
+   "moyenne": 7.794582392776523,
+   "p25": 2.0,
+   "mediane": 5.0,
+   "p75": 11.0,
+   "p90": 17.80000000000001,
+   "maximum": 74
+  },
+  {
+   "garantie": "TEMPETE",
+   "type_delai": "Déclaration",
+   "ordre": 1,
+   "n": 233,
+   "moyenne": 6.708154506437769,
+   "p25": 2.0,
+   "mediane": 4.0,
+   "p75": 10.0,
+   "p90": 16.80000000000001,
+   "maximum": 37
+  },
+  {
+   "garantie": "TOUTES",
+   "type_delai": "Déclaration",
+   "ordre": 1,
+   "n": 2785,
+   "moyenne": 8.33644524236984,
+   "p25": 2.0,
+   "mediane": 5.0,
+   "p75": 11.0,
+   "p90": 20.0,
+   "maximum": 74
+  },
+  {
+   "garantie": "VOL",
+   "type_delai": "Déclaration",
+   "ordre": 1,
+   "n": 386,
+   "moyenne": 9.373056994818652,
+   "p25": 2.0,
+   "mediane": 5.0,
+   "p75": 11.0,
+   "p90": 25.0,
+   "maximum": 65
+  },
+  {
+   "garantie": "BRIS_GLACE",
+   "type_delai": "Premier règlement",
+   "ordre": 2,
+   "n": 69,
+   "moyenne": 55.7536231884058,
+   "p25": 25.0,
+   "mediane": 45.0,
+   "p75": 79.0,
+   "p90": 106.20000000000002,
+   "maximum": 204
+  },
+  {
+   "garantie": "COLLISION",
+   "type_delai": "Premier règlement",
+   "ordre": 2,
+   "n": 396,
+   "moyenne": 59.01010101010101,
+   "p25": 29.0,
+   "mediane": 49.5,
+   "p75": 80.0,
+   "p90": 118.0,
+   "maximum": 387
+  },
+  {
+   "garantie": "DEGAT_EAUX",
+   "type_delai": "Premier règlement",
+   "ordre": 2,
+   "n": 476,
+   "moyenne": 61.15546218487395,
+   "p25": 31.0,
+   "mediane": 52.0,
+   "p75": 84.25,
+   "p90": 117.0,
+   "maximum": 287
+  },
+  {
+   "garantie": "INCENDIE",
+   "type_delai": "Premier règlement",
+   "ordre": 2,
+   "n": 104,
+   "moyenne": 62.49038461538461,
+   "p25": 32.0,
+   "mediane": 46.5,
+   "p75": 76.25,
+   "p90": 133.0,
+   "maximum": 226
+  },
+  {
+   "garantie": "RC",
+   "type_delai": "Premier règlement",
+   "ordre": 2,
+   "n": 408,
+   "moyenne": 57.7671568627451,
+   "p25": 29.75,
+   "mediane": 50.0,
+   "p75": 78.0,
+   "p90": 108.30000000000001,
+   "maximum": 208
+  },
+  {
+   "garantie": "TEMPETE",
+   "type_delai": "Premier règlement",
+   "ordre": 2,
+   "n": 114,
+   "moyenne": 66.14035087719299,
+   "p25": 33.25,
+   "mediane": 53.5,
+   "p75": 80.75,
+   "p90": 138.90000000000003,
+   "maximum": 259
+  },
+  {
+   "garantie": "TOUTES",
+   "type_delai": "Premier règlement",
+   "ordre": 2,
+   "n": 1857,
+   "moyenne": 59.017232094776524,
+   "p25": 29.0,
+   "mediane": 49.0,
+   "p75": 80.0,
+   "p90": 114.40000000000009,
+   "maximum": 387
+  },
+  {
+   "garantie": "VOL",
+   "type_delai": "Premier règlement",
+   "ordre": 2,
+   "n": 290,
+   "moyenne": 54.00689655172414,
+   "p25": 24.0,
+   "mediane": 46.0,
+   "p75": 74.75,
+   "p90": 108.10000000000002,
+   "maximum": 231
+  },
+  {
+   "garantie": "BRIS_GLACE",
+   "type_delai": "Clôture (proxy dernier règlement)",
+   "ordre": 3,
+   "n": 64,
+   "moyenne": 103.140625,
+   "p25": 42.5,
+   "mediane": 92.5,
+   "p75": 141.75,
+   "p90": 243.10000000000005,
+   "maximum": 283
+  },
+  {
+   "garantie": "COLLISION",
+   "type_delai": "Clôture (proxy dernier règlement)",
+   "ordre": 3,
+   "n": 382,
+   "moyenne": 103.54973821989529,
+   "p25": 45.25,
+   "mediane": 80.0,
+   "p75": 143.75,
+   "p90": 208.80000000000007,
+   "maximum": 542
+  },
+  {
+   "garantie": "DEGAT_EAUX",
+   "type_delai": "Clôture (proxy dernier règlement)",
+   "ordre": 3,
+   "n": 464,
+   "moyenne": 105.69181034482759,
+   "p25": 47.0,
+   "mediane": 88.0,
+   "p75": 139.0,
+   "p90": 223.0,
+   "maximum": 464
+  },
+  {
+   "garantie": "INCENDIE",
+   "type_delai": "Clôture (proxy dernier règlement)",
+   "ordre": 3,
+   "n": 99,
+   "moyenne": 98.26262626262626,
+   "p25": 46.5,
+   "mediane": 76.0,
+   "p75": 145.5,
+   "p90": 188.60000000000002,
+   "maximum": 359
+  },
+  {
+   "garantie": "RC",
+   "type_delai": "Clôture (proxy dernier règlement)",
+   "ordre": 3,
+   "n": 391,
+   "moyenne": 101.26598465473145,
+   "p25": 49.5,
+   "mediane": 89.0,
+   "p75": 138.0,
+   "p90": 202.0,
+   "maximum": 454
+  },
+  {
+   "garantie": "TEMPETE",
+   "type_delai": "Clôture (proxy dernier règlement)",
+   "ordre": 3,
+   "n": 110,
+   "moyenne": 105.77272727272727,
+   "p25": 49.5,
+   "mediane": 83.5,
+   "p75": 142.5,
+   "p90": 220.60000000000014,
+   "maximum": 359
+  },
+  {
+   "garantie": "TOUTES",
+   "type_delai": "Clôture (proxy dernier règlement)",
+   "ordre": 3,
+   "n": 1785,
+   "moyenne": 102.00896358543417,
+   "p25": 46.0,
+   "mediane": 83.0,
+   "p75": 141.0,
+   "p90": 208.0,
+   "maximum": 542
+  },
+  {
+   "garantie": "VOL",
+   "type_delai": "Clôture (proxy dernier règlement)",
+   "ordre": 3,
+   "n": 275,
+   "moyenne": 94.2909090909091,
+   "p25": 43.0,
+   "mediane": 72.0,
+   "p75": 138.5,
+   "p90": 202.6,
+   "maximum": 504
+  }
+ ],
+ "audits": [
+  {
+   "critere": "anciennete_contrat",
+   "modalite": "a. < 3 mois",
+   "nb_sinistres": 336,
+   "nb_audites": 55.0,
+   "taux_audit": 0.1636904761904762,
+   "nb_fraudes_confirmees": 11.0,
+   "taux_confirmation_audites": 0.2,
+   "reserve_auditee": 738435.48,
+   "reserve_fraude_confirmee": 223051.95000000004,
+   "paye_sur_fraude_confirmee": 269595.08
+  },
+  {
+   "critere": "anciennete_contrat",
+   "modalite": "b. 3-12 mois",
+   "nb_sinistres": 810,
+   "nb_audites": 111.0,
+   "taux_audit": 0.13703703703703704,
+   "nb_fraudes_confirmees": 6.0,
+   "taux_confirmation_audites": 0.05405405405405406,
+   "reserve_auditee": 1157012.92,
+   "reserve_fraude_confirmee": 33459.33,
+   "paye_sur_fraude_confirmee": 28472.649999999998
+  },
+  {
+   "critere": "anciennete_contrat",
+   "modalite": "c. ≥ 1 an",
+   "nb_sinistres": 1654,
+   "nb_audites": 206.0,
+   "taux_audit": 0.12454655380894801,
+   "nb_fraudes_confirmees": 20.0,
+   "taux_confirmation_audites": 0.0970873786407767,
+   "reserve_auditee": 3363072.42,
+   "reserve_fraude_confirmee": 161394.04,
+   "paye_sur_fraude_confirmee": 189212.33000000002
+  },
+  {
+   "critere": "annee_survenance",
+   "modalite": "2020",
+   "nb_sinistres": 129,
+   "nb_audites": 25.0,
+   "taux_audit": 0.1937984496124031,
+   "nb_fraudes_confirmees": 4.0,
+   "taux_confirmation_audites": 0.16,
+   "reserve_auditee": 326330.6499999999,
+   "reserve_fraude_confirmee": 12756.27,
+   "paye_sur_fraude_confirmee": 15018.050000000001
+  },
+  {
+   "critere": "annee_survenance",
+   "modalite": "2021",
+   "nb_sinistres": 336,
+   "nb_audites": 36.0,
+   "taux_audit": 0.10714285714285714,
+   "nb_fraudes_confirmees": 5.0,
+   "taux_confirmation_audites": 0.1388888888888889,
+   "reserve_auditee": 273549.94000000006,
+   "reserve_fraude_confirmee": 18122.899999999998,
+   "paye_sur_fraude_confirmee": 28284.47
+  },
+  {
+   "critere": "annee_survenance",
+   "modalite": "2022",
+   "nb_sinistres": 529,
+   "nb_audites": 83.0,
+   "taux_audit": 0.15689981096408318,
+   "nb_fraudes_confirmees": 8.0,
+   "taux_confirmation_audites": 0.0963855421686747,
+   "reserve_auditee": 929538.9299999997,
+   "reserve_fraude_confirmee": 204827.88999999998,
+   "paye_sur_fraude_confirmee": 246390.24
+  },
+  {
+   "critere": "annee_survenance",
+   "modalite": "2023",
+   "nb_sinistres": 617,
+   "nb_audites": 82.0,
+   "taux_audit": 0.13290113452188007,
+   "nb_fraudes_confirmees": 7.0,
+   "taux_confirmation_audites": 0.08536585365853659,
+   "reserve_auditee": 2023182.8300000003,
+   "reserve_fraude_confirmee": 42794.8,
+   "paye_sur_fraude_confirmee": 44045.54
+  },
+  {
+   "critere": "annee_survenance",
+   "modalite": "2024",
+   "nb_sinistres": 791,
+   "nb_audites": 101.0,
+   "taux_audit": 0.1276864728192162,
+   "nb_fraudes_confirmees": 11.0,
+   "taux_confirmation_audites": 0.10891089108910891,
+   "reserve_auditee": 1149970.9400000002,
+   "reserve_fraude_confirmee": 129591.69,
+   "paye_sur_fraude_confirmee": 147264.21
+  },
+  {
+   "critere": "annee_survenance",
+   "modalite": "2025",
+   "nb_sinistres": 398,
+   "nb_audites": 45.0,
+   "taux_audit": 0.11306532663316583,
+   "nb_fraudes_confirmees": 2.0,
+   "taux_confirmation_audites": 0.044444444444444446,
+   "reserve_auditee": 555947.53,
+   "reserve_fraude_confirmee": 9811.77,
+   "paye_sur_fraude_confirmee": 6277.55
+  },
+  {
+   "critere": "canal",
+   "modalite": "AGENT",
+   "nb_sinistres": 1154,
+   "nb_audites": 164.0,
+   "taux_audit": 0.14211438474870017,
+   "nb_fraudes_confirmees": 20.0,
+   "taux_confirmation_audites": 0.12195121951219512,
+   "reserve_auditee": 3169729.0000000005,
+   "reserve_fraude_confirmee": 283853.54,
+   "paye_sur_fraude_confirmee": 313694.8
+  },
+  {
+   "critere": "canal",
+   "modalite": "COURTIER",
+   "nb_sinistres": 569,
+   "nb_audites": 69.0,
+   "taux_audit": 0.12126537785588752,
+   "nb_fraudes_confirmees": 6.0,
+   "taux_confirmation_audites": 0.08695652173913043,
+   "reserve_auditee": 729490.0299999999,
+   "reserve_fraude_confirmee": 72052.33,
+   "paye_sur_fraude_confirmee": 82414.56
+  },
+  {
+   "critere": "canal",
+   "modalite": "WEB",
+   "nb_sinistres": 1077,
+   "nb_audites": 139.0,
+   "taux_audit": 0.12906220984215414,
+   "nb_fraudes_confirmees": 11.0,
+   "taux_confirmation_audites": 0.07913669064748201,
+   "reserve_auditee": 1359301.7899999998,
+   "reserve_fraude_confirmee": 61999.45,
+   "paye_sur_fraude_confirmee": 91170.70000000001
+  },
+  {
+   "critere": "delai_declaration",
+   "modalite": "Inconnu",
+   "nb_sinistres": 15,
+   "nb_audites": 3.0,
+   "taux_audit": 0.2,
+   "nb_fraudes_confirmees": 1.0,
+   "taux_confirmation_audites": 0.3333333333333333,
+   "reserve_auditee": 182375.12,
+   "reserve_fraude_confirmee": 152928.52,
+   "paye_sur_fraude_confirmee": 176876.53
+  },
+  {
+   "critere": "delai_declaration",
+   "modalite": "a. 0-2 j",
+   "nb_sinistres": 910,
+   "nb_audites": 102.0,
+   "taux_audit": 0.11208791208791209,
+   "nb_fraudes_confirmees": 0.0,
+   "taux_confirmation_audites": 0.0,
+   "reserve_auditee": 2509885.23,
+   "reserve_fraude_confirmee": null,
+   "paye_sur_fraude_confirmee": null
+  },
+  {
+   "critere": "delai_declaration",
+   "modalite": "b. 3-7 j",
+   "nb_sinistres": 856,
+   "nb_audites": 100.0,
+   "taux_audit": 0.11682242990654206,
+   "nb_fraudes_confirmees": 0.0,
+   "taux_confirmation_audites": 0.0,
+   "reserve_auditee": 1023873.3999999999,
+   "reserve_fraude_confirmee": null,
+   "paye_sur_fraude_confirmee": null
+  },
+  {
+   "critere": "delai_declaration",
+   "modalite": "c. 8-30 j",
+   "nb_sinistres": 893,
+   "nb_audites": 109.0,
+   "taux_audit": 0.12206047032474804,
+   "nb_fraudes_confirmees": 4.0,
+   "taux_confirmation_audites": 0.03669724770642202,
+   "reserve_auditee": 960277.2900000004,
+   "reserve_fraude_confirmee": 19834.72,
+   "paye_sur_fraude_confirmee": 13293.169999999998
+  },
+  {
+   "critere": "delai_declaration",
+   "modalite": "d. > 30 j",
+   "nb_sinistres": 126,
+   "nb_audites": 58.0,
+   "taux_audit": 0.4603174603174603,
+   "nb_fraudes_confirmees": 32.0,
+   "taux_confirmation_audites": 0.5517241379310345,
+   "reserve_auditee": 582109.78,
+   "reserve_fraude_confirmee": 245142.08000000002,
+   "paye_sur_fraude_confirmee": 297110.36
+  },
+  {
+   "critere": "ensemble",
+   "modalite": "Tous",
+   "nb_sinistres": 2800,
+   "nb_audites": 372.0,
+   "taux_audit": 0.13285714285714287,
+   "nb_fraudes_confirmees": 37.0,
+   "taux_confirmation_audites": 0.09946236559139784,
+   "reserve_auditee": 5258520.82,
+   "reserve_fraude_confirmee": 417905.31999999995,
+   "paye_sur_fraude_confirmee": 487280.06
+  },
+  {
+   "critere": "garantie",
+   "modalite": "BRIS_GLACE",
+   "nb_sinistres": 334,
+   "nb_audites": 13.0,
+   "taux_audit": 0.038922155688622756,
+   "nb_fraudes_confirmees": 4.0,
+   "taux_confirmation_audites": 0.3076923076923077,
+   "reserve_auditee": 1050.15,
+   "reserve_fraude_confirmee": 113.12,
+   "paye_sur_fraude_confirmee": 92.47
+  },
+  {
+   "critere": "garantie",
+   "modalite": "COLLISION",
+   "nb_sinistres": 693,
+   "nb_audites": 66.0,
+   "taux_audit": 0.09523809523809523,
+   "nb_fraudes_confirmees": 9.0,
+   "taux_confirmation_audites": 0.13636363636363635,
+   "reserve_auditee": 1836034.1800000002,
+   "reserve_fraude_confirmee": 72218.89,
+   "paye_sur_fraude_confirmee": 83173.56
+  },
+  {
+   "critere": "garantie",
+   "modalite": "DEGAT_EAUX",
+   "nb_sinistres": 595,
+   "nb_audites": 68.0,
+   "taux_audit": 0.11428571428571428,
+   "nb_fraudes_confirmees": 6.0,
+   "taux_confirmation_audites": 0.08823529411764706,
+   "reserve_auditee": 336382.05,
+   "reserve_fraude_confirmee": 14841.49,
+   "paye_sur_fraude_confirmee": 15198.060000000001
+  },
+  {
+   "critere": "garantie",
+   "modalite": "INCENDIE",
+   "nb_sinistres": 109,
+   "nb_audites": 49.0,
+   "taux_audit": 0.44954128440366975,
+   "nb_fraudes_confirmees": 4.0,
+   "taux_confirmation_audites": 0.08163265306122448,
+   "reserve_auditee": 877713.93,
+   "reserve_fraude_confirmee": 81286.21,
+   "paye_sur_fraude_confirmee": 107609.85999999999
+  },
+  {
+   "critere": "garantie",
+   "modalite": "RC",
+   "nb_sinistres": 444,
+   "nb_audites": 106.0,
+   "taux_audit": 0.23873873873873874,
+   "nb_fraudes_confirmees": 2.0,
+   "taux_confirmation_audites": 0.018867924528301886,
+   "reserve_auditee": 1472507.6800000002,
+   "reserve_fraude_confirmee": 18339.09,
+   "paye_sur_fraude_confirmee": 17934.12
+  },
+  {
+   "critere": "garantie",
+   "modalite": "TEMPETE",
+   "nb_sinistres": 235,
+   "nb_audites": 11.0,
+   "taux_audit": 0.04680851063829787,
+   "nb_fraudes_confirmees": 0.0,
+   "taux_confirmation_audites": 0.0,
+   "reserve_auditee": 38744.130000000005,
+   "reserve_fraude_confirmee": null,
+   "paye_sur_fraude_confirmee": null
+  },
+  {
+   "critere": "garantie",
+   "modalite": "VOL",
+   "nb_sinistres": 390,
+   "nb_audites": 59.0,
+   "taux_audit": 0.15128205128205127,
+   "nb_fraudes_confirmees": 12.0,
+   "taux_confirmation_audites": 0.2033898305084746,
+   "reserve_auditee": 696088.7,
+   "reserve_fraude_confirmee": 231106.52,
+   "paye_sur_fraude_confirmee": 263271.99
+  },
+  {
+   "critere": "statut",
+   "modalite": "CLOTURE",
+   "nb_sinistres": 1785,
+   "nb_audites": 336.0,
+   "taux_audit": 0.18823529411764706,
+   "nb_fraudes_confirmees": 30.0,
+   "taux_confirmation_audites": 0.08928571428571429,
+   "reserve_auditee": 5015076.670000002,
+   "reserve_fraude_confirmee": 390687.15,
+   "paye_sur_fraude_confirmee": 478303.58
+  },
+  {
+   "critere": "statut",
+   "modalite": "OUVERT",
+   "nb_sinistres": 172,
+   "nb_audites": 16.0,
+   "taux_audit": 0.09302325581395349,
+   "nb_fraudes_confirmees": 3.0,
+   "taux_confirmation_audites": 0.1875,
+   "reserve_auditee": 243444.15,
+   "reserve_fraude_confirmee": 27218.170000000002,
+   "paye_sur_fraude_confirmee": 8976.48
+  },
+  {
+   "critere": "statut",
+   "modalite": "REJETE",
+   "nb_sinistres": 478,
+   "nb_audites": 0.0,
+   "taux_audit": 0.0,
+   "nb_fraudes_confirmees": 0.0,
+   "taux_confirmation_audites": null,
+   "reserve_auditee": null,
+   "reserve_fraude_confirmee": null,
+   "paye_sur_fraude_confirmee": null
+  },
+  {
+   "critere": "statut",
+   "modalite": "SANS_SUITE",
+   "nb_sinistres": 365,
+   "nb_audites": 20.0,
+   "taux_audit": 0.0547945205479452,
+   "nb_fraudes_confirmees": 4.0,
+   "taux_confirmation_audites": 0.2,
+   "reserve_auditee": 0.0,
+   "reserve_fraude_confirmee": 0.0,
+   "paye_sur_fraude_confirmee": 0.0
+  },
+  {
+   "critere": "tranche_reserve",
+   "modalite": "a. 0 €",
+   "nb_sinistres": 843,
+   "nb_audites": 20.0,
+   "taux_audit": 0.02372479240806643,
+   "nb_fraudes_confirmees": 4.0,
+   "taux_confirmation_audites": 0.2,
+   "reserve_auditee": 0.0,
+   "reserve_fraude_confirmee": 0.0,
+   "paye_sur_fraude_confirmee": 0.0
+  },
+  {
+   "critere": "tranche_reserve",
+   "modalite": "b. < 1 k€",
+   "nb_sinistres": 599,
+   "nb_audites": 38.0,
+   "taux_audit": 0.06343906510851419,
+   "nb_fraudes_confirmees": 5.0,
+   "taux_confirmation_audites": 0.13157894736842105,
+   "reserve_auditee": 15869.869999999999,
+   "reserve_fraude_confirmee": 1939.4699999999998,
+   "paye_sur_fraude_confirmee": 2545.03
+  },
+  {
+   "critere": "tranche_reserve",
+   "modalite": "c. 1-5 k€",
+   "nb_sinistres": 857,
+   "nb_audites": 74.0,
+   "taux_audit": 0.08634772462077013,
+   "nb_fraudes_confirmees": 12.0,
+   "taux_confirmation_audites": 0.16216216216216217,
+   "reserve_auditee": 247718.40999999997,
+   "reserve_fraude_confirmee": 41609.03,
+   "paye_sur_fraude_confirmee": 42265.86
+  },
+  {
+   "critere": "tranche_reserve",
+   "modalite": "d. 5-20 k€",
+   "nb_sinistres": 426,
+   "nb_audites": 197.0,
+   "taux_audit": 0.4624413145539906,
+   "nb_fraudes_confirmees": 12.0,
+   "taux_confirmation_audites": 0.06091370558375635,
+   "reserve_auditee": 1989698.2800000003,
+   "reserve_fraude_confirmee": 106653.45000000001,
+   "paye_sur_fraude_confirmee": 98908.37
+  },
+  {
+   "critere": "tranche_reserve",
+   "modalite": "e. ≥ 20 k€",
+   "nb_sinistres": 75,
+   "nb_audites": 43.0,
+   "taux_audit": 0.5733333333333334,
+   "nb_fraudes_confirmees": 4.0,
+   "taux_confirmation_audites": 0.09302325581395349,
+   "reserve_auditee": 3005234.26,
+   "reserve_fraude_confirmee": 267703.37,
+   "paye_sur_fraude_confirmee": 343560.8
+  }
+ ],
+ "audit_timing": {
+  "n_audites_payes": 347.0,
+  "part_audit_apres_dernier_paiement": 0.25936599423631124,
+  "part_audit_avant_premier_paiement": 0.5619596541786743,
+  "delai_median_audit": 53.0
+ },
+ "fraude_paiements": {
+  "nb_fraudes": 32.0,
+  "paye_total": 487280.0599999999,
+  "paye_apres_audit": 397790.5999999999,
+  "paye_avant_audit": 89489.45999999999
+ },
+ "audit_ic": {
+  "Inconnu": [
+   0.06149194472039626,
+   0.7923403991979523
+  ],
+  "a. 0-2 j": [
+   0.0,
+   0.03629446214646319
+  ],
+  "b. 3-7 j": [
+   0.0,
+   0.03699349820698568
+  ],
+  "c. 8-30 j": [
+   0.014361701565631893,
+   0.09057720071770607
+  ],
+  "d. > 30 j": [
+   0.42452083125844636,
+   0.6725014595221879
+  ],
+  "Tous": [
+   0.07302352668074313,
+   0.13408895916619643
+  ]
+ },
+ "actifs_fin": 13645.0,
+ "actifs_max": 14132.0
+}
